@@ -1,9 +1,10 @@
 <?php
+
 /**
-this requires having the SQL server running, and the login file which 
-contains the access to said SQL server. This is currently on my computer, so
-we wont be able to really do anything with this until we have a dedicated server.
-*/
+ this requires having the SQL server running, and the login file which
+ contains the access to said SQL server. This is currently on my computer, so
+ we wont be able to really do anything with this until we have a dedicated server.
+ */
 
 require_once 'login.php'; //pulls up data from login.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
@@ -11,54 +12,72 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 
-
-
-/**
- * checks to see if all the indeces are set
- * if they are, then it sets all the variables to equal
- * the getpost thing must always be used to make sure data is safe before sending it as a query to a database
- * sets query to be equal to the string for inserting new values
- * then sends the query and stores output in result
- * if the output is false, we output error message
- */
-if (isset($_POST['username'])   && mysql_check_duplicate($conn, $_POST['username']) &&
-    isset($_POST['password'])    &&
-    isset($_POST['email']))
+if  (isset($_POST['username'])                           && //checks if theres input in username box
+    (check_username_length($_POST['username']))          && //checks if username longer than 7 chars
+    mysql_check_duplicate($conn, $_POST['username'])     && //checks if username is duplicate in database
+    isset($_POST['password'])                            && 
+    isset($_POST['email'])                               &&
+    isset($_POST['fname'])                               &&
+    isset($_POST['lname']))                                
 {
-    
+    /**
+     * sends query to server creating a new input into users table
+     * 
+     */
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, hash_password($_POST['password']));
     $email          = mysql_entities_fix_string($conn, $_POST['email']);
+    $fname          = mysql_entities_fix_string($conn, $_POST['fname']);
+    $lname          = mysql_entities_fix_string($conn, $_POST['lname']);
+    
     $query          = "INSERT INTO users VALUES" .
-        "('$username', '$password', '$email', '0')" ;
+                    "('$username', '$password', '$email', '$fname', '$lname', '0')" ;
     
     $result         = $conn -> query($query);
     
-    if (!$result) echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+    if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
 }
 
 
 
-/**
+/** 
  * we use the echo with label to exit PHP and write some html code
  * here we build our new user button and all the fields
+ * all buttons are required
  */
 echo <<<_END
-<form action = "wallstreetLogin.php" method = "post"><pre>
-  username:     <input type = "text" name = "username">
-  password:     <input type = "text" name = "password">
-  email:        <input type = "text" name = "email">
+<form action    = "wsbRegister.php" method = "post"><pre>
+    username:   <input type = "text" name = "username"  required>
+    password:   <input type = "text" name = "password"  required>
+    email:      <input type = "text" name = "email"     required>
+    first name: <input type = "text" name = "fname"     required>
+    last name:  <input type = "text" name = "lname"     required>     
                 <input type = "submit" value = "CREATE NEW USER">
 </pre></form>
 _END;
 
 
 //closes files
-//     $result -> close();
 $conn -> close();
 
 
-//checks for duplicate username ONLY
+/**
+ * checks if input string is longer than 7 chars
+ * @param  $string
+ * @return boolean
+ */
+function check_username_length($string) {
+    if (strlen($string) > 7) {
+        return true;
+    }
+    ECHO "Username $string is not longer than 7 characters";
+    return false;
+}
+
+
+/**
+ * checks if duplicate in database
+ */
 function mysql_check_duplicate($conn, $string) {
     
     $query          = "SELECT email FROM users WHERE username LIKE '$string'";
@@ -72,12 +91,21 @@ function mysql_check_duplicate($conn, $string) {
     
 }
 
+/**
+ * hashes password with default algorithm
+ * @param  $string
+ * @return string
+ */
 function hash_password($string) {
     return password_hash($string, PASSWORD_DEFAULT);
 }
 
-//checks data before sending query
-
+/**
+ * fixes string to not get breached
+ * @param  $conn
+ * @param  $string
+ * @return string
+ */
 function mysql_entities_fix_string($conn, $string) {
     return htmlentities(mysql_fix_string($conn,$string));
 }
