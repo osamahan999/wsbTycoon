@@ -1,4 +1,9 @@
 <?php
+/**
+this requires having the SQL server running, and the login file which 
+contains the access to said SQL server. This is currently on my computer, so
+we wont be able to really do anything with this until we have a dedicated server.
+*/
 
 require_once 'login.php'; //pulls up data from login.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
