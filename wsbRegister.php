@@ -13,7 +13,7 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 if  (isset($_POST['username'])                           && //checks if theres input in username box
-    (check_username_length($_POST['username']))          && //checks if username longer than 7 chars
+    (check_username_requirements($_POST['username']))          && //checks if username longer than 7 chars
     mysql_check_duplicate($conn, $_POST['username'])     && //checks if username is duplicate in database
     isset($_POST['password'])                            && 
     isset($_POST['email'])                               &&
@@ -61,18 +61,23 @@ _END;
 $conn -> close();
 
 
+
 /**
- * checks if input string is longer than 7 chars
- * @param  $string
+ * Checks username to see if:
+ * username > 7 characters
+ * username contains uppercase letter
+ * username contains number
+ * @param unknown $string
  * @return boolean
  */
-function check_username_length($string) {
-    if (strlen($string) > 7) {
+function check_username_requirements($string) {
+    if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string)))  {
         return true;
     }
-    ECHO "Username $string is not longer than 7 characters";
+    echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
     return false;
 }
+
 
 
 /**
