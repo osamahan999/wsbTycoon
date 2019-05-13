@@ -64,6 +64,7 @@ $conn -> close();
 
 /**
  * doesnt work yet
+ * small change
  * Checks username to see if:
  * username > 7 characters
  * username contains uppercase letter
