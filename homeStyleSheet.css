@@ -1,0 +1,39 @@
+.leftPage {
+  float: left;
+  min-width: 125px;
+  min-height: 100vh;
+  font-size: 30px;
+  background-color: grey;
+}
+
+.middlePage {
+  float: left;
+  min-width: 772px;
+  min-height: 100vh;
+  font-size: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: cyan;
+}
+
+.rightPage {
+  float: right;
+  min-width: 125px;
+  min-height: 100vh;
+  font-size: 30px;
+  background-color: grey;
+}
+
+.search-btn {
+	text-align: center;
+	width: 150px;
+	height: 20px;
+	right: 50%;
+	position: absolute;
+
+}
+
+.reg-btn {
+	
+	
+}
