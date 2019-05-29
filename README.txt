@@ -1,10 +1,10 @@
-front.html - currently the frontend homepage website, built with bootstrap and html5
+htmlCSS folder- has all the html and css files associated with this project
 
-logInPage.php - an html page with two text boxes that take in an username and a password respectively,
-and checking our sql database for said username with the said password
+	home.html has the main page html
+	homeStyleSheet.css has the css for the home.html file
+	search.html is supposed to look up a specified search. does not work
+	wsb.jpg is the icon
 
-wsb.jpg - wallstreetbets icon
-
-wsbRegister.php - takes in information including username and password. adds your data as user in the sql database
-
-searchPage.js - should get Alpha Vantage data and display it
+php folder- has all the php files associated with this project
+	logInPage.php has the html and the php for logging into the sql server
+	wsbRegister.php has he html and php for creating a new account on the sql server
