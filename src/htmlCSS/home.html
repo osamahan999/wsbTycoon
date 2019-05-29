@@ -24,13 +24,17 @@
   	
   	</div>
   	
-  	<div id="watch-list">
-  		
-  		<ul id="watch-list-elements">
-  			
-  		</ul>
+  	<canvas id="watch-list">
   	
-  	</div>
+  	</canvas>
+  	
+  	<script>
+  		var c = document.getElementById("watch-list");
+  		var ctx = c.getContext("2d");
+  		ctx.moveTo(0,0);
+  		ctx.lineTo(200, 100);
+  		ctx.stroke();
+  	</script>
   	  	
       
   </div>
