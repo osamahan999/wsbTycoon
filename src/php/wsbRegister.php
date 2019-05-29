@@ -6,7 +6,7 @@
  we wont be able to really do anything with this until we have a dedicated server.
  */
 
-require_once 'login.php'; //pulls up data from login.php
+require_once 'logInfo.php'; //pulls up data from login.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
@@ -27,11 +27,11 @@ if  (isset($_POST['username'])                           && //checks if theres i
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, hash_password($_POST['password']));
     $email          = mysql_entities_fix_string($conn, $_POST['email']);
-    $fname          = mysql_entities_fix_string($conn, $_POST['fname']);
-    $lname          = mysql_entities_fix_string($conn, $_POST['lname']);
+    $firstName      = mysql_entities_fix_string($conn, $_POST['fname']);
+    $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
     
     $query          = "INSERT INTO users VALUES" .
-                    "('$username', '$password', '$email', '$fname', '$lname', '0')" ;
+                    "('$username', '$password', '$email', '$firstName', '$lastName', '0', '0', '0', '0')" ;
     
     $result         = $conn -> query($query);
     
@@ -72,11 +72,12 @@ $conn -> close();
  * @return boolean
  */
 function check_username_requirements($string) {
-    if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string)))  {
-        return true;
-    }
-    echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
-    return false;
+//     if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string)))  {
+//         return true;
+//     }
+//     echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
+//     return false;
+       return true;
 }
 
 
