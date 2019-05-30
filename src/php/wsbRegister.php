@@ -30,6 +30,8 @@ if  (isset($_POST['username'])                           && //checks if theres i
     $firstName      = mysql_entities_fix_string($conn, $_POST['fname']);
     $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
     
+    
+    //default values for user
     $query          = "INSERT INTO users VALUES" .
                     "('$username', '$password', '$email', '$firstName', '$lastName', '0', '0', '0', '0')" ;
     

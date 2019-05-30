@@ -16,25 +16,30 @@
   <aside class="leftPage margins"></aside>  
   <div class="middlePage">
   	
-  	<p id="money">$MONEY$</p>
-  	<div class="graph">
-  	<!--change this to canvas --->
-  		<div id="profitGraph"></div>
-  		<div id="profitGraphBar"></div>
-  	
+  	<div id="fullGraph">
+  		<p id="money">$MONEY$</p>
+  		<figure id="graph">
+  			<svg viewBox="0 0 500 100" class="graphSVG">
+  			
+  				<polyline
+     				fill="none"
+     				stroke="#0074d9"
+    				stroke-width="2"
+     				points="
+       					50,50
+       					80,80"
+   				/>
+   
+   
+  
+  			
+  			</svg>
+  		</figure>
   	</div>
-  	
   	<canvas id="watch-list">
   	
   	</canvas>
-  	
-  	<script>
-  		var c = document.getElementById("watch-list");
-  		var ctx = c.getContext("2d");
-  		ctx.moveTo(0,0);
-  		ctx.lineTo(200, 100);
-  		ctx.stroke();
-  	</script>
+
   	  	
       
   </div>
