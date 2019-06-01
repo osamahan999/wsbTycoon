@@ -1,6 +1,6 @@
 <?php 
 $hn = 'localhost';
-$db = 'wallstreetbets';
+$db = 'wsbLog';
 $un = 'osama';
 $pw = '123';
 

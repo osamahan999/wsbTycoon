@@ -6,14 +6,24 @@
  we wont be able to really do anything with this until we have a dedicated server.
  */
 
+
 require_once 'logInfo.php'; //pulls up data from login.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
+
+//default values
+$defaultTotalMoney = 100000;
+$defaultRevenue = 0;
+$defaultLoss = 0;
+$userID = 0;
+$defaultWatchList = array ("'MSFT'", "'TSLA'", "'GOOGL'", "'AAPL'", "'NVDA'", "'AMD'", "'NBC'", "'X'", "'GPRO'", "'YAHO'");
+
+
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
 
 
 if  (isset($_POST['username'])                           && //checks if theres input in username box
-    (check_username_requirements($_POST['username']))          && //checks if username longer than 7 chars
+    (check_username_requirements($_POST['username']))    && //checks if username longer than 7 chars
     mysql_check_duplicate($conn, $_POST['username'])     && //checks if username is duplicate in database
     isset($_POST['password'])                            && 
     isset($_POST['email'])                               &&
@@ -22,7 +32,6 @@ if  (isset($_POST['username'])                           && //checks if theres i
 {
     /**
      * sends query to server creating a new input into users table
-     * 
      */
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, hash_password($_POST['password']));
@@ -30,16 +39,74 @@ if  (isset($_POST['username'])                           && //checks if theres i
     $firstName      = mysql_entities_fix_string($conn, $_POST['fname']);
     $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
     
+//     $query          = "INSERT INTO users VALUES" .
+//         "('$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', '$userID')" ;
     
-    //default values for user
+//     $result         = $conn -> query($query);
+    
+//     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+    
+    
+    
+//     $query = "SELECT userID FROM users WHERE email LIKE '$email'";
+//     $result = $conn -> query($query);
+//     $userID = $result->fetch_array(MYSQLI_ASSOC);
+    
+//     $userID = $userID['userID'];
+    
+//     $query = "INSERT INTO watch_list VALUES" . "('$userID', $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
+//              $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7],
+//              $defaultWatchList[8], $defaultWatchList[9])";
+//     $result = $conn -> query($query);
+    
+//     if (!$result) echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+    
+    
+    initializeUsersTable($username, $password, $email, $firstName, $lastName, $conn);
+    initializeWatchListTable($email, $conn, $defaultWatchList);
+    
+}
+
+/**
+ * 
+ * @param unknown $username
+ * @param unknown $password
+ * @param unknown $email
+ * @param unknown $firstName
+ * @param unknown $lastName
+ * @param unknown $conn
+ */
+function initializeUsersTable($username, $password, $email, $firstName, $lastName, $conn) {
     $query          = "INSERT INTO users VALUES" .
-                    "('$username', '$password', '$email', '$firstName', '$lastName', '0', '0', '0', '0')" ;
+                      "('$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', '$userID')" ;
     
     $result         = $conn -> query($query);
     
     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
 }
 
+/**
+ * 
+ * @param unknown $email
+ * @param unknown $conn
+ * @param unknown $defaultWatchList
+ */
+function initializeWatchListTable($email, $conn, $defaultWatchList) {
+    
+    $query = "SELECT userID FROM users WHERE email LIKE '$email'";
+    $result = $conn -> query($query);
+    $userID = $result->fetch_array(MYSQLI_ASSOC);
+    
+    $userID = $userID['userID'];
+    
+    $query = "INSERT INTO watch_list VALUES" . "('$userID', $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
+             $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7],
+             $defaultWatchList[8], $defaultWatchList[9])";
+             $result = $conn -> query($query);
+             
+             if (!$result) echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+             
+}
 
 
 /** 
@@ -61,6 +128,8 @@ _END;
 
 //closes files
 $conn -> close();
+
+
 
 
 
