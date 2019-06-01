@@ -114,14 +114,13 @@ $conn -> close();
 /**
  * doesnt work yet
  * Checks username to see if:
- * username > 7 characters
  * username contains uppercase letter
  * username contains number
  * @param unknown $string
  * @return boolean
  */
 function check_username_requirements($string) {
-    if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string))) {
+    if (preg_match('/\d/', $string) && preg_match( '/[A-Z]/', $string)) {
         return true;
     }
     echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
