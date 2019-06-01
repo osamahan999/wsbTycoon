@@ -22,6 +22,9 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 
+/**
+ * checks if there are inputs in the input html
+ */
 if  (isset($_POST['username'])                           && //checks if theres input in username box
     (check_username_requirements($_POST['username']))    && //checks if username longer than 7 chars
     mysql_check_duplicate($conn, $_POST['username'])     && //checks if username is duplicate in database
@@ -31,35 +34,13 @@ if  (isset($_POST['username'])                           && //checks if theres i
     isset($_POST['lname']))                                
 {
     /**
-     * sends query to server creating a new input into users table
+     * sanitizes strings and creates user-table and watch_list-table inputs
      */
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, hash_password($_POST['password']));
     $email          = mysql_entities_fix_string($conn, $_POST['email']);
     $firstName      = mysql_entities_fix_string($conn, $_POST['fname']);
     $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
-    
-//     $query          = "INSERT INTO users VALUES" .
-//         "('$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', '$userID')" ;
-    
-//     $result         = $conn -> query($query);
-    
-//     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
-    
-    
-    
-//     $query = "SELECT userID FROM users WHERE email LIKE '$email'";
-//     $result = $conn -> query($query);
-//     $userID = $result->fetch_array(MYSQLI_ASSOC);
-    
-//     $userID = $userID['userID'];
-    
-//     $query = "INSERT INTO watch_list VALUES" . "('$userID', $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
-//              $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7],
-//              $defaultWatchList[8], $defaultWatchList[9])";
-//     $result = $conn -> query($query);
-    
-//     if (!$result) echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
     
     
     initializeUsersTable($username, $password, $email, $firstName, $lastName, $conn);
@@ -68,7 +49,7 @@ if  (isset($_POST['username'])                           && //checks if theres i
 }
 
 /**
- * 
+ * new input in users table
  * @param unknown $username
  * @param unknown $password
  * @param unknown $email
@@ -86,7 +67,7 @@ function initializeUsersTable($username, $password, $email, $firstName, $lastNam
 }
 
 /**
- * 
+ * gets userID from the inputted email, and makes the watch_list input for that userID
  * @param unknown $email
  * @param unknown $conn
  * @param unknown $defaultWatchList
@@ -130,9 +111,6 @@ _END;
 $conn -> close();
 
 
-
-
-
 /**
  * doesnt work yet
  * Checks username to see if:
@@ -143,12 +121,11 @@ $conn -> close();
  * @return boolean
  */
 function check_username_requirements($string) {
-//     if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string)))  {
-//         return true;
-//     }
-//     echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
-//     return false;
-       return true;
+    if ((strlen($string) > 7) && (1 === preg_match('~[0,9]~', $string)) && (1 === preg_match('/[A,Z]/', $string))) {
+        return true;
+    }
+    echo "Username is not longer than 7 characters, or does not contain an uppercase letter or number.";
+    return false;
 }
 
 
