@@ -1,35 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/stockSearch.js"></script>
 
-	<script>
-	
-	const keyToken = "&api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
-	const home = "https://api.worldtradingdata.com/api/v1/stock?symbol=";
-	var stock = "AAPL";
-	
-	
-	$(document).ready(function(){
-		var Url = home.concat(stock).concat(keyToken);
-		
-		
-		
-		$('#button').click(function(){
-			$.ajax({
-				url: Url,
-				type: "GET",
-				success: function(result){
-					console.log(result);
-				},
-				error: function(error){
-					console.log('Error ${error}')
-				}
-			})
-			
-		})
-		
-	})
-	</script>
 	
 	<form>
 	<input type="button" id = "button" value="apple"> 
