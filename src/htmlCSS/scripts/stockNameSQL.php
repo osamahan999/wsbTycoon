@@ -11,20 +11,13 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-createTable();
-populateTable();
+createTable($conn);
+populateTable($conn);
 
 
-function createTable() {
+function createTable($conn) {
     $tableName = "stocks";
-    $query = "CREATE TABLE $tableName (" .
-                    "Symbol CHAR(5)," .
-                    "Name VARCHAR(32)," .
-                    "MarketCap DOUBLE(16,2)," .
-                    "IPOyear INT(4)," .
-                    "Sector VARCHAR(32)," .
-                    "Industry VARCHAR(32)" . 
-                    ")";
+    $query = "CREATE TABLE $tableName ( symbol CHAR(5), name VARCHAR(32), marketCap DOUBLE(16,2), sector VARCHAR(32), industry VARCHAR(32))";
     
     $result = $conn -> query($query);
     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
@@ -32,14 +25,15 @@ function createTable() {
 }
 
 
-function populateTable() {
+function populateTable($conn) {
     
     if (($file = fopen("companylist.csv", "r")) != FALSE) {
         
         while(($data = fgetcsv($file, 2000, ",")) != FALSE) {
             
-            $query = "INSERT INTO stocks(Symbol, Name, MarketCap, IPOyear, Sector, Industry)" .
-                     "VALUES($data[0], $data[1], $data[3], $data[5], $data[6], $data[7])" ;
+            $data = fgetcsv($file, 2000, ",");
+            $query = "INSERT INTO stocks(symbol, name, marketCap, sector, industry)" .
+                     " VALUES('$data[0]', '$data[1]', $data[3], '$data[6]', '$data[7]')" ;
             
             $result = $conn -> query($query);
             if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
