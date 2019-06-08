@@ -2,17 +2,15 @@
 //this is my API key
 const keyToken = "api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
 //this is the home link
-const home = "https://api.worldtradingdata.com/api/v1/stock?symbol=";
+const home = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=";
 //the stocks we want data for
-var stock = "AAPL,NVDA,FB,TSLA&sort_by=name&";
-	
+var stock = "AAPL&range=1&interval=1&";	
 	
 	
 	
 	//does the ajax request and also document.writes the amt of time it took
 	$(document).ready(function(){
 		var Url = home.concat(stock).concat(keyToken);
-		
 		
 		$('#button').click(function(){
 			var start_time = new Date().getTime();
@@ -22,8 +20,12 @@ var stock = "AAPL,NVDA,FB,TSLA&sort_by=name&";
 				type: "GET",
 				success: function(result){
 					var request_time = new Date().getTime() - start_time;
-					document.write(request_time + " ms" + '<br>');
-					stock_print(result["data"]);
+					document.write("request time: " + request_time + " ms" + '<br>');
+					
+					intradayPrinter(result);
+					
+					
+//					stock_print(result["data"]);
 				},
 				error: function(error){
 					console.log('Error ${error}')
@@ -34,7 +36,21 @@ var stock = "AAPL,NVDA,FB,TSLA&sort_by=name&";
 		
 	})
 	
-	
+	/**
+	 * this function will take in the stock data, and build an array that will be used to show the specific stock data. 
+	 * @param result
+	 * @returns
+	 */
+	function intradayPrinter(result) {
+		// first creates the array with the appropriate 
+		document.write("Stock data for " + stock + ": " + '<br>');
+		var x;
+		for (x in result["intraday"]) {
+			document.write(x + ":  $" + result["intraday"][x]["open"] + '<br>');
+		}
+		
+		
+	}
 	
 	// prints the stock symbol and name, the price and volume for all stocks called. 
 	function stock_print(result) {
