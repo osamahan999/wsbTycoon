@@ -1,10 +1,19 @@
-htmlCSS folder- has all the html and css files associated with this project
 
-	home.html has the main page html
-	homeStyleSheet.css has the css for the home.html file
-	search.html is supposed to look up a specified search. does not work
-	wsb.jpg is the icon
-
-php folder- has all the php files associated with this project
-	logInPage.php has the html and the php for logging into the sql server
-	wsbRegister.php has he html and php for creating a new account on the sql server
+src
+	htmlCSS
+		home.html - html for the home page
+		homeStyleSheet.css - css for the home.html page
+		stockSearch.html - simple page with a button that calls searchPage.js to test the javascript
+		wsb.jpg - the logo
+		
+		scripts
+			companylist.csv - csv file of all companies on the NASDAQ with their stock symbol and other info
+			jquery.min.js - jquery file
+			logInfo.php - database login information
+			logInPage.php - page in which you can attempt to log in
+			searchBarSearch.php - looks up stocks from the company list on our sql server
+			stockNamesSQL.php - program that populates the table stocks with the file companylist.csv
+			stockSearch.js - ajax requests specific stock data and prints it
+			wsbRegister.php - allows you to create a user which gets added to the database
+	SQL
+		wsblog.sql - our mysql database backup
