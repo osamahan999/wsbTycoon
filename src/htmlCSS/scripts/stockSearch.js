@@ -22,8 +22,8 @@ var stock = "AAPL&range=1&interval=1&";
 					var request_time = new Date().getTime() - start_time;
 					document.write("request time: " + request_time + " ms" + '<br>');
 					
-					intradayPrinter(result);
 					
+					intradayPrinter(result);
 					
 //					stock_print(result["data"]);
 				},
@@ -36,21 +36,28 @@ var stock = "AAPL&range=1&interval=1&";
 		
 	})
 	
+	
 	/**
-	 * this function will take in the stock data, and build an array that will be used to show the specific stock data. 
+	 * takes json ajax, and prints the open price of the stock at each minute
 	 * @param result
 	 * @returns
 	 */
 	function intradayPrinter(result) {
-		// first creates the array with the appropriate 
 		document.write("Stock data for " + stock + ": " + '<br>');
-		var x;
-		for (x in result["intraday"]) {
-			document.write(x + ":  $" + result["intraday"][x]["open"] + '<br>');
+		for (var x in result["intraday"]) {
+			(function(x_copy){
+				setTimeout(printStockPrice(result, x_copy), 1000);	
+			})(x);
 		}
-		
-		
 	}
+	
+	
+	
+	
+	function printStockPrice(result, x) {
+		document.write(x + ": $" + result["intraday"][x]["open"] + '<br>');
+	}
+	
 	
 	// prints the stock symbol and name, the price and volume for all stocks called. 
 	function stock_print(result) {
@@ -60,3 +67,9 @@ var stock = "AAPL&range=1&interval=1&";
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
