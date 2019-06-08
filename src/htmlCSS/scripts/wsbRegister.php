@@ -43,44 +43,43 @@ if  (isset($_POST['username'])                           && //checks if theres i
     $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
     
     
-    initializeUsersTable($username, $password, $email, $firstName, $lastName, $conn);
-    initializeWatchListTable($email, $conn, $defaultWatchList);
+    initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn);
     
 }
 
 /**
- * new input in users table
+ * creates new user, and puts them in users table and in watch_list tables with default input
  * @param unknown $username
  * @param unknown $password
  * @param unknown $email
  * @param unknown $firstName
  * @param unknown $lastName
+ * @param unknown $defaultWatchList
  * @param unknown $conn
  */
-function initializeUsersTable($username, $password, $email, $firstName, $lastName, $conn) {
+function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn) {
     $query          = "INSERT INTO users VALUES" .
                       "('$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', '$userID')" ;
     
     $result         = $conn -> query($query);
+
+    // calls initializeWatchlistTable which adds the default watch list for the new user
+    initializeWatchListTable(mysqli_insert_id($conn), $conn, $defaultWatchList);
     
     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
 }
 
 /**
- * gets userID from the inputted email, and makes the watch_list input for that userID
- * @param unknown $email
+ * takes the new userID from the new input and creates an input in the default watch list. 
+ * @param unknown $userID
  * @param unknown $conn
  * @param unknown $defaultWatchList
  */
-function initializeWatchListTable($email, $conn, $defaultWatchList) {
+
+function initializeWatchListTable($userID, $conn, $defaultWatchList) {
     
-    $query = "SELECT userID FROM users WHERE email LIKE '$email'";
-    $result = $conn -> query($query);
-    $userID = $result->fetch_array(MYSQLI_ASSOC);
     
-    $userID = $userID['userID'];
-    
-    $query = "INSERT INTO watch_list VALUES" . "('$userID', $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
+    $query = "INSERT INTO watch_list VALUES" . "($userID, $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
              $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7],
              $defaultWatchList[8], $defaultWatchList[9])";
              $result = $conn -> query($query);
