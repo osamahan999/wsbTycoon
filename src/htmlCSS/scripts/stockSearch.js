@@ -6,7 +6,7 @@ const home = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=";
 //the stocks we want data for
 var stock = "AAPL&range=1&interval=1&";	
 	
-	
+var stockPricePerMin = [];
 	
 	//does the ajax request and also document.writes the amt of time it took
 	$(document).ready(function(){
@@ -23,7 +23,7 @@ var stock = "AAPL&range=1&interval=1&";
 					document.write("request time: " + request_time + " ms" + '<br>');
 					
 					
-					intradayPrinter(result);
+					priceArrayBuilder(result);
 					
 //					stock_print(result["data"]);
 				},
@@ -42,20 +42,23 @@ var stock = "AAPL&range=1&interval=1&";
 	 * @param result
 	 * @returns
 	 */
-	function intradayPrinter(result) {
+	function priceArrayBuilder(result) {
 		document.write("Stock data for " + stock + ": " + '<br>');
 		for (var x in result["intraday"]) {
-			(function(x_copy){
-				setTimeout(printStockPrice(result, x_copy), 1000);	
-			})(x);
+			stockPricePerMin.push(result["intraday"][x]["open"]);
 		}
+		
+		stockPricePerMin.reverse();
+		printStockPrice(stockPricePerMin);
 	}
 	
 	
 	
 	
-	function printStockPrice(result, x) {
-		document.write(x + ": $" + result["intraday"][x]["open"] + '<br>');
+	function printStockPrice(array) {
+		for (var i = 0; i < array.length; i++) {
+			document.write("$" + array[i] + '<br>');
+		}
 	}
 	
 	
