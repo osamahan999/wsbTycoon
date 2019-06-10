@@ -38,7 +38,7 @@ var stockPricePerMin = [];
 	
 	
 	/**
-	 * takes json ajax, and prints the open price of the stock at each minute
+	 * takes json ajax, and prints the open price of the stock at second intervals
 	 * @param result
 	 * @returns
 	 */
@@ -54,13 +54,19 @@ var stockPricePerMin = [];
 	
 	
 	
-	
+	/**
+	 * prints the array of prices with the time 
+	 * @param array
+	 * @param time
+	 * @returns
+	 */
 	function printStockPrice(array) {
-		for (var i = 0; i < array.length; i++) {
-			document.write("$" + array[i] + '<br>');
+		for (let i = 0; i < array.length; i++) {
+			setTimeout(function(){ document.write("$" + array[i] + '<br>'); }, 1000*i);
 		}
 	}
 	
+
 	
 	// prints the stock symbol and name, the price and volume for all stocks called. 
 	function stock_print(result) {
