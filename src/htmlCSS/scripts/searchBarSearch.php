@@ -1,7 +1,9 @@
 <?php 
 
 /**
- * should take in a stock name/symbol and returns stock symbol
+ * the auto complete feature of our search bar, which searches all the stock symbols for similarities
+ * also check out API 
+ * https://www.worldtradingdata.com/documentation#searching
  */
 
 
