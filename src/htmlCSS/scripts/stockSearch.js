@@ -25,7 +25,6 @@ var stockPricePerMin = [];
 					
 					priceArrayBuilder(result);
 					
-//					stock_print(result["data"]);
 				},
 				error: function(error){
 					console.log('Error ${error}')
@@ -37,6 +36,47 @@ var stockPricePerMin = [];
 	})
 	
 	
+//	document.write(getFormattedDateTime() + '<br>');
+	isMarketClosed();
+	
+	
+	
+	/**
+	 * returns formatted date and time
+	 * @returns
+	 */
+	function getFormattedDateTime() {
+		var date = new Date();
+//		2019-06-10 15:59:00
+		
+		var formattedDate = date.getFullYear() + "-" + ('0' + (date.getMonth() + 1)).slice(-2) 
+		+ "-" + ('0' + date.getDate()).slice(-2) + " " 
+		+ ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2) 
+		+ ":" + ('0' + date.getSeconds()).slice(-2);
+		
+		return formattedDate;
+	}
+	
+	/**
+	 * checks to see if market is closed based on NYSE
+	 * change this to php so that it is server side
+	 * @returns
+	 */
+	function isMarketClosed() {
+		
+		var date = new Date();
+		var isClosed = false;
+		
+		//(hours >= 13 OR hours < 6) OR (hours = 6 and minutes < 30)
+		if ((parseInt(date.getHours()) >= 13 || parseInt(date.getHours()) < 6) || 
+				(parseInt(date.getHours()) == 6 && parseInt(date.getMinutes()) < 30) ) {
+			isClosed = true;
+		} 
+		
+		return isClosed;
+		
+
+	}
 	/**
 	 * takes json ajax, and prints the open price of the stock at second intervals
 	 * @param result
@@ -67,17 +107,7 @@ var stockPricePerMin = [];
 	}
 	
 
-	
-	// prints the stock symbol and name, the price and volume for all stocks called. 
-	function stock_print(result) {
-		for (i = 0; i < result.length; i++) {
-			document.write(result[i]["symbol"] + ":" + result[i]["name"] + " Price: " + 
-					result[i]["price"] + " Volume: " + result[i]["volume"] + '<br>');
-		}
-		
-	}
-	
-	
+
 	
 	
 	
