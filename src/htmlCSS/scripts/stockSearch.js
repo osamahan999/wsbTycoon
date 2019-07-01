@@ -102,7 +102,7 @@ var stockPricePerMin = [];
 	 */
 	function printStockPrice(array) {
 		for (let i = 0; i < array.length; i++) {
-			setTimeout(function(){ document.write("$" + array[i] + '<br>'); }, 1000*i);
+			function(){ document.write("$" + array[i] + '<br>'); }
 		}
 	}
 	
