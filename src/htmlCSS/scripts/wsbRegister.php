@@ -58,15 +58,30 @@ if  (isset($_POST['username'])                           && //checks if theres i
  * @param unknown $conn
  */
 function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn) {
-    $query          = "INSERT INTO users VALUES" .
-                      "('$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', '$userID')" ;
+//     $query          = "INSERT INTO users VALUES" .
+//                       "('$userID', '$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue'," . 
+//  "'$defaultLoss', '$defaultWatchList[0]', '$defaultWatchList[1]', '$defaultWatchList[2]', '$defaultWatchList[3]', '$defaultWatchList[4]', '$defaultWatchList[5]'," . 
+//     "'$defaultWatchList[6]', '$defaultWatchList[7]', '$defaultWatchList[8]', '$defaultWatchList[9]', '$defaultWatchList[10]','','','','','','','','','','')" ;
     
-    $result         = $conn -> query($query);
+//     $result         = $conn -> query($query);
 
-    // calls initializeWatchlistTable which adds the default watch list for the new user
-    initializeWatchListTable(mysqli_insert_id($conn), $conn, $defaultWatchList);
+    $query = "INSERT INTO users (userID, username, password, email, firstName, lastName, totalMoney, revenue, loss, watch_list1, watch_list2, watch_list3, watch_list4, " . 
+    "watch_list5, watch_list6, watch_list7, watch_list8, watch_list9, watch_list10) VALUES " . 
+    "('$userID', '$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', $defaultWatchList[0], " . 
+    "$defaultWatchList[1], $defaultWatchList[2], $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7]," . 
+    "$defaultWatchList[8], $defaultWatchList[9])";
+    $result         = $conn -> query($query);
     
     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+    
+    
+    
+    
+    
+    
+    // calls initializeWatchlistTable which adds the default watch list for the new user
+//     initializeWatchListTable(mysqli_insert_id($conn), $conn, $defaultWatchList);
+    
 }
 
 /**

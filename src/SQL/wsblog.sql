@@ -107,17 +107,37 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
+  `userID` int(5) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,
   `password` varchar(128) NOT NULL,
-  `email` varchar(128) DEFAULT NULL,
+  `email` varchar(128) NOT NULL,
   `firstName` varchar(32) NOT NULL,
   `lastName` varchar(32) NOT NULL,
   `totalMoney` double(10,2) unsigned NOT NULL,
   `revenue` double(10,2) unsigned NOT NULL,
   `loss` double(10,2) unsigned NOT NULL,
-  `userID` int(5) unsigned NOT NULL AUTO_INCREMENT,
+  `watch_list1` char(5) DEFAULT NULL,
+  `watch_list2` char(5) DEFAULT NULL,
+  `watch_list3` char(5) DEFAULT NULL,
+  `watch_list4` char(5) DEFAULT NULL,
+  `watch_list5` char(5) DEFAULT NULL,
+  `watch_list6` char(5) DEFAULT NULL,
+  `watch_list7` char(5) DEFAULT NULL,
+  `watch_list8` char(5) DEFAULT NULL,
+  `watch_list9` char(5) DEFAULT NULL,
+  `watch_list10` char(5) DEFAULT NULL,
+  `watch_list11` char(5) DEFAULT NULL,
+  `watch_list12` char(5) DEFAULT NULL,
+  `watch_list13` char(5) DEFAULT NULL,
+  `watch_list14` char(5) DEFAULT NULL,
+  `watch_list15` char(5) DEFAULT NULL,
+  `watch_list16` char(5) DEFAULT NULL,
+  `watch_list17` char(5) DEFAULT NULL,
+  `watch_list18` char(5) DEFAULT NULL,
+  `watch_list19` char(5) DEFAULT NULL,
+  `watch_list20` char(5) DEFAULT NULL,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,38 +147,6 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `watch_list`
---
-
-DROP TABLE IF EXISTS `watch_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `watch_list` (
-  `userID` int(5) unsigned NOT NULL,
-  `wl1` char(5) DEFAULT NULL,
-  `wl2` char(5) DEFAULT NULL,
-  `wl3` char(5) DEFAULT NULL,
-  `wl4` char(5) DEFAULT NULL,
-  `wl5` char(5) DEFAULT NULL,
-  `wl6` char(5) DEFAULT NULL,
-  `wl7` char(5) DEFAULT NULL,
-  `wl8` char(5) DEFAULT NULL,
-  `wl9` char(5) DEFAULT NULL,
-  `wl10` char(5) DEFAULT NULL,
-  PRIMARY KEY (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `watch_list`
---
-
-LOCK TABLES `watch_list` WRITE;
-/*!40000 ALTER TABLE `watch_list` DISABLE KEYS */;
-/*!40000 ALTER TABLE `watch_list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -170,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-08 15:36:53
+-- Dump completed on 2019-07-01 21:26:59
