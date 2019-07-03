@@ -2,8 +2,7 @@
 
 /**
  * the auto complete feature of our search bar, which searches all the stock symbols for similarities
- * also check out API 
- * https://www.worldtradingdata.com/documentation#searching
+ * utilizes sql table 'stocks' rather than the api. this reduces our ajax requests. 
  */
 
 
@@ -12,23 +11,44 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-
+/**
+ * TODO: change this so that if any letter was put into the search box, it calls this function
+ */
 if ($_POST["search"]) {
     searchTable($_POST["search"]);
 }
 
-function searchTable($stock)  {
+/**
+ * takes in a string called stock, and searched our stocks table for 
+ * top 5 matches, and pulls them in alphabetical order
+ * @param string $stock
+ */
+
+//test
+searchTable("app", $conn);
+
+/**
+ * pulls up 5 top matches. puts them in array $pulledStocks
+ * @param unknown $stock
+ * @param unknown $conn
+ */
+function searchTable($stock, $conn)  {
     // selects the symbol of the stock that has ap% in its symbol or name
-    $query = "SELECT symbol FROM stocks WHERE (symbol LIKE 'ap%') OR (name LIKE 'ap%') LIMIT 5";
+    $query = "SELECT symbol FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT 5";
     $result = $conn -> query($query);
     
-    $result         -> data_seek(0);
-    $result         = $result -> fetch_array(MYSQLI_NUM);
+    //limit amount set in query
+    $limit = 5;
+    $pulledStocks = array();
     
-    for ($i = 0; i < count($result); $i++) {
-        echo $result[i] + '<br>';
+    for ($i = 0; $i < $limit; $i++) {
+        $row    = $result   -> data_seek[i];
+        $newResult = $result   -> fetch_array(MYSQLI_NUM);
+        
+        array_push($pulledStocks, $newResult[0]); 
+        
+        echo $pulledStocks[$i] . '<br>';
     }
-    
 }
 
 
