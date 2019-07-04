@@ -11,12 +11,7 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-/**
- * TODO: change this so that if any letter was put into the search box, it calls this function
- */
-if ($_POST["search"]) {
-    searchTable($_POST["search"]);
-}
+
 
 /**
  * takes in a string called stock, and searched our stocks table for 
@@ -24,8 +19,16 @@ if ($_POST["search"]) {
  * @param string $stock
  */
 
+
+
 //test
-searchTable("app", $conn);
+// searchTable("app", $conn);
+
+if (isset($_POST['name'])) {
+    searchTable($_POST['name'], $conn);
+}
+
+
 
 /**
  * pulls up 5 top matches. puts them in array $pulledStocks
