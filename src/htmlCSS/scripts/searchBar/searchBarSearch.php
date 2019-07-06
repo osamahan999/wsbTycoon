@@ -1,28 +1,14 @@
-<?php 
-
+<?php
 /**
  * the auto complete feature of our search bar, which searches all the stock symbols for similarities
- * utilizes sql table 'stocks' rather than the api. this reduces our ajax requests. 
+ * utilizes sql table 'stocks' rather than the api. this reduces our ajax requests.
  */
-
 
 require_once 'logInfo.php'; //pulls up data from logInfo.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
-
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
 
-
-/**
- * takes in a string called stock, and searched our stocks table for 
- * top 5 matches, and pulls them in alphabetical order
- * @param string $stock
- */
-
-
-
-//test
-// searchTable("app", $conn);
 
 if (isset($_POST['name'])) {
     searchTable($_POST['name'], $conn);
@@ -48,16 +34,9 @@ function searchTable($stock, $conn)  {
         $row    = $result   -> data_seek[i];
         $newResult = $result   -> fetch_array(MYSQLI_NUM);
         
-        array_push($pulledStocks, $newResult[0]); 
+        array_push($pulledStocks, $newResult[0]);
         
         echo $pulledStocks[$i] . '<br>';
     }
 }
-
-
-
-
-
-
-
 ?>

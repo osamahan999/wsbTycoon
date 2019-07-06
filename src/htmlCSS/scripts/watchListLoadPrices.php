@@ -1,6 +1,16 @@
 <?php 
 
 
+
+/**
+ * 
+ * 
+ * DEPRECATED!!!!
+ * TODO: UPDATE TO WORK WITH UPDATED users AND watch_list TABLES
+ * 
+ * 
+ */
+
 require_once 'logInfo.php'; //pulls up data from logInfo.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 
