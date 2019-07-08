@@ -10,9 +10,13 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 
-if (isset($_POST['name'])) {
-    searchTable($_POST['name'], $conn);
+
+
+
+if (isset($_POST['input'])) {
+    searchTable($_POST['input']);
 }
+
 
 
 
@@ -21,9 +25,12 @@ if (isset($_POST['name'])) {
  * @param unknown $stock
  * @param unknown $conn
  */
-function searchTable($stock, $conn)  {
+function searchTable($stock)  {
+    
+    
+    global $conn;
     // selects the symbol of the stock that has ap% in its symbol or name
-    $query = "SELECT symbol FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT 5";
+    $query = "SELECT name FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT 5";
     $result = $conn -> query($query);
     
     //limit amount set in query
@@ -36,7 +43,9 @@ function searchTable($stock, $conn)  {
         
         array_push($pulledStocks, $newResult[0]);
         
-        echo $pulledStocks[$i] . '<br>';
     }
+    
+    
+    echo json_encode(array("TopFiveStocks"=>$pulledStocks));
 }
 ?>

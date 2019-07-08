@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 
-<?php require 'searchBarSearch.php'; ?>
-
 <html lang="en">
 
-
+<body>
+	<script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
+	<script src="searchBarQuery.js"></script> 	
+	<link rel="stylesheet" href="searchBar.css">
+		
 	
-	<form action="searchBarSearch.php" method="post">
-	Name: <input type="text" name="name"><br>
+	<form autocomplete="off" action="/searchBarSearch.php">
+		<div class="autocomplete" style="width:300px;"> 
+			<input id="myInput" type="text" name="myStock" placeholder="Stock"><br>	
+		</div>
+		<input type="submit">
 	</form> 
 	
-	
+</body>	
+
+	<script>	
+		autocomplete(document.getElementById("myInput"));
+	</script>
+
+
 </html>
