@@ -1,19 +1,34 @@
-
 src
-	htmlCSS
-		home.html - html for the home page
-		homeStyleSheet.css - css for the home.html page
-		stockSearch.html - simple page with a button that calls searchPage.js to test the javascript
-		wsb.jpg - the logo
-		
-		scripts
-			companylist.csv - csv file of all companies on the NASDAQ with their stock symbol and other info
-			jquery.min.js - jquery file
-			logInfo.php - database login information
-			logInPage.php - page in which you can attempt to log in
-			searchBarSearch.php - looks up stocks from the company list on our sql server
-			stockNamesSQL.php - program that populates the table stocks with the file companylist.csv
-			stockSearch.js - ajax requests specific stock data and prints it
-			wsbRegister.php - allows you to create a user which gets added to the database
+	home page
+		home.html - html mark up for home page
+		homeStyleSheet.css - css that goes with home.html
+		watchListLoadPrices.php - pulls watch-list data for specific users. information will be put on home page.
+	login and registration
+		logInPage.php - a page where you put your credentials and it checks if you're in the system. if so, logged in.
+		wsbRegister.php - a page where you can register an account into our database
+	searchBar
+		searchBar.html - test search bar
+		searchBarSearch.php - gets top 5 closest search results. will be called each time a character is added/deleted from search bar
+		BST
+			BinarySearchTree.js - loads up stock data into bst, and then performs search. most likely will not be used. SQL simply better.
 	SQL
-		wsblog.sql - our mysql database backup
+		wsblog.sql - MYSQLDUMP file for our database
+	stock api ajax
+		stockSearch.html - test html page with a button that calls stockSearch.js
+		stockSearch.js - ajax requests for stock data
+
+	util 
+		access
+			logInfo.php - database access info
+		csv files
+			companylist.csv - has most stocks with data for each one in it.
+		external libraries 
+			jquery.min.js - jQuery
+		helper scripts
+			createUsersTable.php - creates the users table when called
+			getSortedArray.php - outputs the alphabetically sorted 2D array of stock names and symbols as a string.
+			stockNameSQL.php - populates stocks table with companylist.csv 's data
+		images
+			wsb.jpg - wallstreetbets icon
+
+README.txt			

@@ -4,7 +4,7 @@
  * utilizes sql table 'stocks' rather than the api. this reduces our ajax requests.
  */
 
-require_once 'logInfo.php'; //pulls up data from logInfo.php
+require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 

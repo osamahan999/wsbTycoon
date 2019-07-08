@@ -7,7 +7,7 @@
  */
 
 
-require_once 'logInfo.php'; //pulls up data from login.php
+require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 
 //default values
