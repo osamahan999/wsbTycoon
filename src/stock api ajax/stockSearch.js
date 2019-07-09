@@ -1,4 +1,3 @@
-
 //this is my API key
 const keyToken = "api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
 //this is the home link
@@ -7,7 +6,9 @@ const home = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=";
 var stock = "AAPL&range=1&interval=1&";	
 	
 var stockPricePerMin = [];
-	
+
+
+
 	//does the ajax request and also document.writes the amt of time it took
 	$(document).ready(function(){
 		var Url = home.concat(stock).concat(keyToken);
@@ -102,7 +103,7 @@ var stockPricePerMin = [];
 	 */
 	function printStockPrice(array) {
 		for (let i = 0; i < array.length; i++) {
-			setTimeout(function(){ document.write("$" + array[i] + '<br>'); }, 1000*i);
+			(function(){ document.write("$" + array[i] + '<br>'); })();
 		}
 	}
 	
