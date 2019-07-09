@@ -1,6 +1,19 @@
+/**
+ * searchBarQuery.js
+ * Called each time someone types in the search bar. ajax requests searchBarSearch.php
+ * with the text-box input as the parameter. this is then queried into our sql stocks table
+ * for top 5 matches based on either symbol or name of the stock. returns those in an array.
+ * this script then adds those items into divs and puts them on our page.
+ * 
+ * bug: list is choppy.
+ * potential solutions: put the addToList function into the autocomplete function after ajax, and that
+ * gets rid of the choppiness. however, that has another bug associated. first input doesnt do anything.
+ */
 
+
+
+//initializes our array
 var arr = new Array();
-
 //sets global array
 function setArray(arr) {
 	this.arr = arr;
@@ -27,7 +40,7 @@ function autocomplete(inp) {
       
       var searchTerm = inp.value;
       
-      //ajax requests top 5 matches from searchBarSearch.php, stores it in global array.
+      //ajax requests top 5 matches from searchBarSearch.php, stores it in global array 'arr'.
       $.ajax({
 		url: 'http://localhost/wsb/src/searchBar/searchBarSearch.php',
 		type: 'post',
@@ -37,14 +50,15 @@ function autocomplete(inp) {
 			arr = result.TopFiveStocks;
 			setArray(arr);
 			console.log("array gotten and set as 'arr'");
-			addToList(arr, i, b, a);
-			}
+			addToList(a, b, i, arr);
+		}
       });
       
+
       
   });
-  
-  function addToList(arr, i, b, a) {
+   
+  function addToList(a, b, i, arr) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
     	  console.log("pointer hit for loop on line 46!");
@@ -64,7 +78,7 @@ function autocomplete(inp) {
     		  });
     	  a.appendChild(b);
     	  }
-      } 
+      }
   }
   
   /*execute a function presses a key on the keyboard:*/

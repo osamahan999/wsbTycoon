@@ -6,14 +6,16 @@
  */
 
 
-require_once 'logInfo.php'; //pulls up data from logInfo.php
+require '/../access/logInfo.php'; //pulls up data from logInfo.php
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-createTable($conn);
-populateTable($conn);
+$csv = '../csv files/companylist.csv';
+
+// createTable($conn);
+populateTable($conn, $csv);
 
 
 function createTable($conn) {
@@ -26,13 +28,13 @@ function createTable($conn) {
 }
 
 
-function populateTable($conn) {
+function populateTable($conn, $csv) {
     
-    if (($file = fopen("companylist.csv", "r")) != FALSE) {
+    if (($file = fopen($csv, "r")) != FALSE) {
         
+        ini_set('max_execution_time', 300); //temporarily sets max exe time to 300 if computer is slow at adding records to table.
         while(($data = fgetcsv($file, 2000, ",")) != FALSE) {
             
-            $data = fgetcsv($file, 2000, ",");
             $query = "INSERT INTO stocks(symbol, name, marketCap, sector, industry)" .
                      " VALUES('$data[0]', '$data[1]', $data[3], '$data[6]', '$data[7]')" ;
             
