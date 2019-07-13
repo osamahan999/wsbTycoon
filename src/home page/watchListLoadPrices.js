@@ -1,4 +1,12 @@
+//this is my API key
+const keyToken = "api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
+//this is the home link
+const home = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=";
+
 var arr = new Array();
+
+getWatchList("testUser123");
+
 //sets global array
 function setArray(arr) {
 	this.arr = arr;
@@ -14,6 +22,8 @@ function getWatchList(username) {
 		success: function(result){
 			arr = result.watchList;
 			setArray(arr);
+			
+			for (var i = 0; i < arr.length; i++) console.log(arr[i]);
 			}
 		});
 	
@@ -21,23 +31,23 @@ function getWatchList(username) {
 }
 
 function getPrices(watchList) {
-	$.ajax({
-		url: Url,
-		type: "GET",
-		success: function(result){
-			
-			//calls urlBuilder
-			//store price in array
-			
-		},
-		error: function(error){
-			console.log('Error ${error}')
-		}
-	})
-}
-
-
-//takes array and builds it into the url api
-function urlBuilder(watchList) {
 	
+	for (var i = 0; i < watchList.length; i++) {
+		var Url = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=" + watchList[i];
+		Url += "api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
+		
+		$.ajax({
+			url: Url,
+			type: "GET",
+			success: function(result){
+				
+				
+				
+			},
+			error: function(error){
+				console.log('Error ${error}')
+			}
+		})
+	}
 }
+

@@ -3,15 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>WSB Tycoon</title>
+    <script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
+	<script src="/wsb/src/home page/searchBar/searchBarQuery.js"></script> 	
     <link rel="stylesheet" type="text/css" href="homeStyleSheet.css">
     
   </head>
   <body style="margin: 0;">
     	
   <nav class="nav-bar">
-  	<form autocomplete="off" action="/scripts/searchBarSearch.php" method="post">
-  		<input class="search-btn" id="search" name="search" placeholder="Stock Name Here">
-  	</form>
+	<form autocomplete="off" action="/searchBarSearch.php">
+		<div class="autocomplete" style="width:300px;"> 
+			<input id="myInput" type="text" name="myStock" placeholder="Stock"><br>	
+		</div>
+		<input type="submit" value="Go">
+	</form> 
   	<button class="nav-btn account-btn" type="button">Account</button>
   </nav>
      
@@ -36,6 +41,9 @@
   <aside class="rightPage margins"></aside>
   
   
+  	<script>	
+		autocomplete(document.getElementById("myInput"));
+	</script>
   
   
   </body>

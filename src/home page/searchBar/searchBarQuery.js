@@ -42,7 +42,7 @@ function autocomplete(inp) {
       
       //ajax requests top 5 matches from searchBarSearch.php, stores it in global array 'arr'.
       $.ajax({
-		url: 'http://localhost/wsb/src/searchBar/searchBarSearch.php',
+		url: 'http://localhost/wsb/src/home%20page/searchBar/searchBarSearch.php',
 		type: 'post',
 		dataType: 'json',
 		data: {action : 'searchTable', input : searchTerm},
