@@ -45,8 +45,7 @@ function searchTable($stock)  {
         array_push($pulledStocks, $newResult[0]);
         
     }
-    
-    
+        
     echo json_encode(array("TopFiveStocks"=>$pulledStocks));
 }
 ?>
