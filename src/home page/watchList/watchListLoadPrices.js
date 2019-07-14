@@ -18,9 +18,7 @@ function setStocks(stocks) {
 }
 
 //takes in username, queries sql for watch-list preferences, ajax api for prices
-function getWatchList(username) {
-	console.log("this got called!");
-	
+function getWatchList(username) {	
 	//username of person we're loading the watchlist for
 	console.log(username);
 	
@@ -56,7 +54,8 @@ function getWatchList(username) {
 function getPrices(watchList) {
 	//called for all stocks in watch list
 	for (var i = 0; i < watchList.length; i++) {
-		var Url = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=" + watchList[i] + "&range=1&interval=1&" + keyToken2;			
+		//builds url
+		var Url = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=" + watchList[i] + "&range=1&interval=1&" + keyToken1;			
 		
 		//if stock is not null, continue
 		if (watchList[i] != null) {
@@ -90,7 +89,9 @@ function populateArray(result) {
 		newArray.push(result["intraday"][x]["open"]);
 		counter++;
 	}
-	stocks[result["symbol"]] = newArray;
+	
+	var stockName = result["symbol"];
+	stocks[stockName] = newArray;
 	
 	setStocks(stocks);
 }
