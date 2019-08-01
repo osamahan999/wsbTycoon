@@ -21,7 +21,6 @@ function getStockPrice(stock) {
 }
 
 
-<<<<<<< HEAD
 
 
 function purchaseStock() {
@@ -30,7 +29,7 @@ function purchaseStock() {
 	
 	console.log("You want " + formIns[1] + " of " + formIns[0]);
 }
-=======
+
 function getUserCash(username) {
 	
 	//call php script that returns caash amt
@@ -45,4 +44,3 @@ function canTheyBuy(stockPrice, userCash, quantity) {
 		//print not enough cash!
 	}
 }
->>>>>>> branch 'In_Progress' of https://github.com/osamahan999/wsbTycoon.git
