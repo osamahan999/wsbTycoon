@@ -1,11 +1,10 @@
 
 
-$('#purchase').click(function(){
-	
-	var stock = document.getElementById('stockName');
-	var amt = document.getElementById('quantity');
-	
-	document.write("You want to buy " + amt + "of " + stock + "?");
+
+
+function purchaseStock() {
+	var formIns = document.getElementById("stockPurchaseForm");
 	
 	
-})
+	console.log("You want " + formIns[1] + " of " + formIns[0]);
+}

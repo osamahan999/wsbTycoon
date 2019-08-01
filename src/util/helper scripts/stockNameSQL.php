@@ -14,13 +14,13 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 $csv = '../csv files/companylist.csv';
 
-// createTable($conn);
+createTable($conn);
 populateTable($conn, $csv);
 
 
 function createTable($conn) {
     $tableName = "stocks";
-    $query = "CREATE TABLE $tableName ( symbol CHAR(5), name VARCHAR(32), marketCap DOUBLE(16,2), sector VARCHAR(32), industry VARCHAR(32))";
+    $query = "CREATE TABLE $tableName (stockID INT(5) NOT NULL AUTO_INCREMENT KEY, symbol CHAR(5), name VARCHAR(32), marketCap DOUBLE(16,2), sector VARCHAR(32), industry VARCHAR(32))";
     
     $result = $conn -> query($query);
     if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
