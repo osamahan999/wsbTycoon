@@ -15,7 +15,7 @@ $defaultTotalMoney = 100000;
 $defaultRevenue = 0;
 $defaultLoss = 0;
 $userID = 0;
-$defaultWatchList = array ("'MSFT'", "'TSLA'", "'GOOGL'", "'AAPL'", "'NVDA'", "'AMD'", "'NBC'", "'X'", "'GPRO'", "'YAHO'");
+$defaultWatchList = array ("'MSFT'", "'TSLA'", "'GOOGL'", "'AAPL'", "'NVDA'", "'AMD'", "'FB'", "'X'", "'GPRO'", "'DIS'");
 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
