@@ -37,7 +37,7 @@ function getUserCash(username) {
 }
 
 function canTheyBuy(stockPrice, userCash, quantity) {
-	if ((stockPrice * quantity) >= userCash) {
+	if ((stockPrice * quantity) <= userCash) {
 		//ajax php script to remove that amount of money from the users account
 		//also add transaction to transactions table
 	} else {

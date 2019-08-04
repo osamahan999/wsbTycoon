@@ -4,6 +4,19 @@ require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
+$username = "Osamahan123";
+$transactionType = 'buy';
+
+
+if ($_POST) {
+    
+    $stock = $_POST['myStock'];
+    $amt = $_POST['amt'];
+    global $username;
+    
+    purchaseStock($stock, $amt, $username);
+}
+
 
 
 function purchaseStock ($stock, $amt, $username) {
@@ -13,7 +26,8 @@ function purchaseStock ($stock, $amt, $username) {
     //displays DATETIME values in 'YYYY-MM-DD hh:mm:ss'
     $currentTime = currentDate();
     
-    $stockPrice = getStockPrice($stock, $currentTime);
+    $dateTime = "2019-08-01 20:24:03";
+    $stockPrice = getStockPrice($stock, $dateTime);
     $stockPrice *= $amt;
     
     $userCash = getUserCash($userID);
@@ -27,6 +41,8 @@ function purchaseStock ($stock, $amt, $username) {
         $query = "UPDATE users SET totalMoney = '$newCash' WHERE userID = '$userID'";
         $result = $conn -> query($query);
         
+        
+        updateTransactionsTable($stock, $transactionType, $amt, $dateTime, $userID);
         if (!$result) echo "UPDATE FAILED " . $query;
         
         
@@ -42,14 +58,20 @@ function getUserCash($userID) {
     $result = $conn -> query($query);
     
     if (!$result) echo "QUERY FAILED" . $query;
+    
+    $result -> num_rows;
+    $userCash = $result -> fetch_array(MYSQLI_NUM);
+    
+    return $userCash[0];
 }
 
 //adds the new purchase onto the transactions table;
-function updateTransactionsTable() {
+function updateTransactionsTable($stock, $transactionType, $amt, $date, $userID) {
     global $conn;
+    global $transactionType;
     
     $query = "INSERT INTO transactions(stockSymbol, transactionType, amtTraded, tradeDate, userID) VALUES" .
-             "('$stock', 'buy', '$amt', '$currentTime', '$userID')";
+             "('$stock', 'buy', '$amt', '$date', '$userID')";
     $result = $conn -> query($query);
     
     if (!$result) echo "INSERT FAILED " . $query;
@@ -65,15 +87,20 @@ function getUserID($username) {
     $result -> num_rows;
     $userID = $result -> fetch_array(MYSQLI_NUM);
     
-    return $userID;
+    return $userID[0];
 }
 
 // gets the stock's price in our stockPrice table
 function getStockPrice ($stock, $currentTime) {
     global $conn;
     
-    $query = "SELECT price FROM stockPrices WHERE stock = $stock AND timeOfPrice = $currentTime";
+    $query = "SELECT price FROM stockPrices WHERE stock = '$stock' AND timeOfPrice = '$currentTime'";
     $result = $conn -> query($query);
+    
+    $result -> num_rows;
+    $stockPrice = $result -> fetch_array(MYSQLI_NUM);
+    
+    return $stockPrice[0];
 }
 
 //change it to be global date time
