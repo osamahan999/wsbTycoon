@@ -1,23 +1,18 @@
 <!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Stock Page</title>
+	</head>
+	<body>
 
-<html lang="en">
-
-<body>
-
-	<script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
-	<script src="/../wsb/src/stockPurchase/stockPurchase.js"></script>
-	
-
-	<form autocomplete="off" id="stockPurchaseForm" action="#" onsubmit="return purchaseStock()">
 		<input type="text" id="myStock" 	placeholder="Stock"><br>
-		<input type="text" id="amt" 		placeholder="amt"><br>	
-			
-		<input type="submit" value="Go">
-	</form> 
+		<input type="text" id="amt" placeholder="amt"><br>
+		<button onclick="purchaseStock()">Submit</button>
 
-	
-</body>	
+		<p id = "output"></p>
 
+		<script src="stockPurchase.js"></script>
 
-
+	</body>
 </html>
