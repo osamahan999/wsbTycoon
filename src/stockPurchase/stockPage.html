@@ -3,14 +3,16 @@
 <html lang="en">
 
 <body>
+
 	<script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
-	<script src="/wsb/src/stockPurchase/stockPurchase.js"></script>
+	<script src="/../wsb/src/stockPurchase/stockPurchase.js"></script>
 	
-	<form autocomplete="off" id="stockPurchaseForm" action="stockPurchase.php" method="post">
-		<input id="stockName" type="text" name="myStock" placeholder="Stock"><br>
-		<input id="quantity"  type="text" name="amt" placeholder="amt"><br>	
+
+	<form autocomplete="off" id="stockPurchaseForm" action="#" onsubmit="return purchaseStock()">
+		<input type="text" id="myStock" 	placeholder="Stock"><br>
+		<input type="text" id="amt" 		placeholder="amt"><br>	
 			
-		<input id="purchase" type="submit" value="Go">
+		<input type="submit" value="Go">
 	</form> 
 
 	

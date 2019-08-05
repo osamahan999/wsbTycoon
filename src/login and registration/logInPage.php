@@ -24,20 +24,13 @@ if (isset($_POST['username'])       &&
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, $_POST['password']);
 
-    log_in($conn, $username, $password);
+    log_in($username, $password);
 }
 
 
-echo <<<_END
-<form action    = "logInPage.php" method = "post"><pre>
-  username:     <input type = "text" name = "username">
-  password:     <input type = "text" name = "password">
-                <input type = "submit" value = "CREATE NEW USER">
-</pre></form>
-_END;
 
-
-function log_in($conn, $username, $password) {
+function log_in($username, $password) {
+    global $conn;
     
     $query          = "SELECT password FROM users WHERE username LIKE '$username'";
     $result         = $conn -> query($query);
@@ -45,11 +38,12 @@ function log_in($conn, $username, $password) {
     $result         = $result -> fetch_array(MYSQLI_NUM);
     
     if (password_verify($password, $result[0])) {
-        ECHO "you're logged in as $username!";
+        
         $logged_in = true;
-    }
-    else ECHO "incorrect username or password";
-    
+        
+        echo json_encode(array("isLogged" => $logged_in));
+        
+    }    
 }
 
 function hash_password($string) {
