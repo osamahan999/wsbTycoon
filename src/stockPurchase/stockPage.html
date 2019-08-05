@@ -4,20 +4,15 @@
 
 <body>
 
-	<script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
-	<script src="/../wsb/src/stockPurchase/stockPurchase.js"></script>
-	
+	<script src="stockPurchase.js"></script>
 
-	<form autocomplete="off" id="stockPurchaseForm" action="#" onsubmit="return purchaseStock()">
+
 		<input type="text" id="myStock" 	placeholder="Stock"><br>
-		<input type="text" id="amt" 		placeholder="amt"><br>	
-			
-		<input type="submit" value="Go">
-	</form> 
+		<input type="text" id="amt" placeholder="amt"><br>
 
-	
-</body>	
+		<button onclick="purchaseStock()">Submit</button>
 
+	<p id = "output"></p>
 
-
+</body>
 </html>
