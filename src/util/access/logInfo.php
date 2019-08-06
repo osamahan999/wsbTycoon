@@ -1,10 +1,9 @@
 <?php 
-$hn = 'localhost';
-$db = 'wsbLog';
-$un = 'osama';
-$pw = '123';
+$hn = 'l3855uft9zao23e2.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+$db = 'vrddzocadhfvj75e';
+$un = 'cw2rr3ondds4ref1';
+$pw = 'adxfjoid9fvgozcl';
 
-$alphaVantageAPI = "P3H2D9PQS4N0MNI4";
 
 
 ?> 

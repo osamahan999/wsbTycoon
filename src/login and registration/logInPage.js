@@ -15,7 +15,7 @@ function logIn() {
 			loggedIn = result.isLogged;
 			
 			if (loggedIn) {
-				sessionStorage.username =  user;
+				sessionStorage.setItem("username", user) ;
 			}
 		}
       });
