@@ -40,10 +40,12 @@ function log_in($username, $password) {
     if (password_verify($password, $result[0])) {
         
         $logged_in = true;
-        
         echo json_encode(array("isLogged" => $logged_in));
         
-    }    
+    } else {
+        $logged_in = false;
+        echo json_encode(array("isLogged" => $logged_in));
+    }
 }
 
 function hash_password($string) {
