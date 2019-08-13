@@ -19,11 +19,9 @@ function logIn() {
 				data: {action : 'log_in', username: user, password: pass},
 				success: function(result){
 					loggedIn = result.isLogged;
-					console.log(loggedIn);
+					userID = result.userID;
 				
 					if (loggedIn) {
-						localStorage.setItem('username', user) ;
-						console.log("Local storage worked! Your username is " + localStorage.getItem('username'));
 					
 						//sends you to home page.
 						return window.location.href='http://localhost/wsb/src/home%20page/home.html';

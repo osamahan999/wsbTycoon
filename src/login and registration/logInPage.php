@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
@@ -32,15 +33,17 @@ if (isset($_POST['username'])       &&
 function log_in($username, $password) {
     global $conn;
     
-    $query          = "SELECT password FROM users WHERE username LIKE '$username'";
+    $query          = "SELECT * FROM users WHERE username LIKE '$username'";
     $result         = $conn -> query($query);
     $result         -> data_seek(0);
     $result         = $result -> fetch_array(MYSQLI_NUM);
     
-    if (password_verify($password, $result[0])) {
+    if (password_verify($password, $result[2])) {
         
         $logged_in = true;
-        echo json_encode(array("isLogged" => $logged_in));
+        $_SESSION['userID'] = $result[0];
+        
+        echo json_encode(array("isLogged" => $logged_in, "userID" => $_SESSION['userID']));
         
     } else {
         $logged_in = false;
