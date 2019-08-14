@@ -1,13 +1,18 @@
 
-function loadMoney() {
+function getFaceData() {
+	console.log("getFaceData called");
+	
 	$.ajax({
 		url: 'http://localhost/wsb/src/home%20page/home.php',
 		type: 'post',
 		dataType: 'json', 
-		data: {action : 'getMoney'},
+		data: {action : 'getFaceData'},
 		success: function(result){
+			console.log("getFaceData ajax success BAYBE!");
 			totalMoney = result.totalMoney;
-			document.getElementById("money").innerHTML = totalMoney;
+			username = result.username;
+			document.getElementById("money").innerHTML = "$" + totalMoney;
+			document.getElementById("account").innerHTML = username;
 		}
 	});	
 }
@@ -27,7 +32,7 @@ function checkLoggedIn() {
 		
 			if (loggedIn) {
 				console.log("YOURE LOGGED IN BAYBE home.js/26");
-				loadMoney();
+				getFaceData();
 			} else {
 				return window.location.href='http://localhost/wsb/src/login%20and%20registration/logInPage.html';
 
