@@ -10,7 +10,7 @@ function logIn() {
 	        //form data
 	    	user = document.getElementsByName("username")[0].value; 
 	    	pass = document.getElementsByName("password")[0].value;
-	    	
+
 	    	//gets boolean from php file if logged in. 
 	    	$.ajax({
 				url: 'http://localhost/wsb/src/login%20and%20registration/logInPage.php',
