@@ -5,6 +5,7 @@ require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
+
 $logged_in = false;
 
 
@@ -25,13 +26,12 @@ if (isset($_POST['username'])       &&
     $username       = mysql_entities_fix_string($conn, $_POST['username']);
     $password       = mysql_entities_fix_string($conn, $_POST['password']);
 
-    log_in($username, $password);
+    log_in($username, $password, $conn);
 }
 
 
 
-function log_in($username, $password) {
-    global $conn;
+function log_in($username, $password, $conn) {
     
     $query          = "SELECT * FROM users WHERE username LIKE '$username'";
     $result         = $conn -> query($query);
@@ -62,6 +62,7 @@ function mysql_entities_fix_string($conn, $string) {
 }
 
 function mysql_fix_string($conn, $string) {
+    
     if (get_magic_quotes_gpc()) $string = stripslashes($string);
     return $conn -> real_escape_string($string);
 }

@@ -1,9 +1,19 @@
 <?php 
 
+/**
+ * ask about globals and about incrementing in for loops
+ * 
+ * 
+ * 
+ */
+
 require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
+global $conn;
+
+//hard coded transaction type for now
 $transactionType = 'buy';
 
 
@@ -13,13 +23,12 @@ if ($_POST) {
     $amt = $_POST['amt'];
     $username = $_POST['username'];
     
-    purchaseStock($stock, $amt, $username);
+    purchaseStock($stock, $amt, $username, $transactionType);
 }
 
 
 
-function purchaseStock ($stock, $amt, $username) {
-    global $conn;
+function purchaseStock ($stock, $amt, $username, $transactionType) {
     
     $userID = getUserID($username);
     //displays DATETIME values in 'YYYY-MM-DD hh:mm:ss'
@@ -51,7 +60,6 @@ function purchaseStock ($stock, $amt, $username) {
 
 //gets the specific user's totalMoney
 function getUserCash($userID) {
-    global $conn;
     
     $query = "SELECT totalMoney FROM users WHERE userID = '$userID'";
     $result = $conn -> query($query);
@@ -66,8 +74,6 @@ function getUserCash($userID) {
 
 //adds the new purchase onto the transactions table;
 function updateTransactionsTable($stock, $transactionType, $amt, $date, $userID) {
-    global $conn;
-    global $transactionType;
     
     $query = "INSERT INTO transactions(stockSymbol, transactionType, amtTraded, tradeDate, userID) VALUES" .
              "('$stock', 'buy', '$amt', '$date', '$userID')";

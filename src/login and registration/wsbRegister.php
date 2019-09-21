@@ -10,6 +10,7 @@
 require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 
+
 //default values
 $defaultTotalMoney = 100000;
 $defaultRevenue = 0;
@@ -27,7 +28,7 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
  */
 if  (isset($_POST['username'])                           && //checks if theres input in username box
     (check_username_requirements($_POST['username']))    && //checks if username longer than 7 chars
-    mysql_check_duplicate($conn, $_POST['username'])     && //checks if username is duplicate in database
+    mysql_check_duplicate($_POST['username'])            && //checks if username is duplicate in database
     isset($_POST['password'])                            && 
     isset($_POST['email'])                               &&
     isset($_POST['fname'])                               &&
@@ -36,14 +37,14 @@ if  (isset($_POST['username'])                           && //checks if theres i
     /**
      * sanitizes strings and creates user-table and watch_list-table inputs
      */
-    $username       = mysql_entities_fix_string($conn, $_POST['username']);
-    $password       = mysql_entities_fix_string($conn, hash_password($_POST['password']));
-    $email          = mysql_entities_fix_string($conn, $_POST['email']);
-    $firstName      = mysql_entities_fix_string($conn, $_POST['fname']);
-    $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
+    $username       = mysql_entities_fix_string($_POST['username']);
+    $password       = mysql_entities_fix_string(hash_password($_POST['password']));
+    $email          = mysql_entities_fix_string($_POST['email']);
+    $firstName      = mysql_entities_fix_string($_POST['fname']);
+    $lastName       = mysql_entities_fix_string($_POST['lname']);
     
     
-    initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn);
+    initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList);
     
 }
 
@@ -57,7 +58,7 @@ if  (isset($_POST['username'])                           && //checks if theres i
  * @param unknown $defaultWatchList
  * @param unknown $conn
  */
-function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn) {
+function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList) {
 //     $query          = "INSERT INTO users VALUES" .
 //                       "('$userID', '$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue'," . 
 //  "'$defaultLoss', '$defaultWatchList[0]', '$defaultWatchList[1]', '$defaultWatchList[2]', '$defaultWatchList[3]', '$defaultWatchList[4]', '$defaultWatchList[5]'," . 
@@ -65,6 +66,8 @@ function initializeTables($username, $password, $email, $firstName, $lastName, $
     
 //     $result         = $conn -> query($query);
 
+    global $conn;
+    
     $query = "INSERT INTO users (userID, username, password, email, firstName, lastName, totalMoney, revenue, loss, watch_list1, watch_list2, watch_list3, watch_list4, " . 
     "watch_list5, watch_list6, watch_list7, watch_list8, watch_list9, watch_list10) VALUES " . 
     "('$userID', '$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', '$defaultLoss', $defaultWatchList[0], " . 
@@ -87,12 +90,12 @@ function initializeTables($username, $password, $email, $firstName, $lastName, $
 /**
  * takes the new userID from the new input and creates an input in the default watch list. 
  * @param unknown $userID
- * @param unknown $conn
  * @param unknown $defaultWatchList
  */
 
-function initializeWatchListTable($userID, $conn, $defaultWatchList) {
+function initializeWatchListTable($userID, $defaultWatchList) {
     
+    global $conn;
     
     $query = "INSERT INTO watch_list VALUES" . "($userID, $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2],
              $defaultWatchList[3], $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7],
@@ -121,8 +124,6 @@ echo <<<_END
 _END;
 
 
-//closes files
-$conn -> close();
 
 
 /**
@@ -146,8 +147,8 @@ function check_username_requirements($string) {
 /**
  * checks if duplicate in database
  */
-function mysql_check_duplicate($conn, $string) {
-    
+function mysql_check_duplicate($string) {
+    global $conn;
     $query          = "SELECT email FROM users WHERE username LIKE '$string'";
     $result         = $conn -> query($query);
     
@@ -170,20 +171,22 @@ function hash_password($string) {
 
 /**
  * fixes string to not get breached
- * @param  $conn
  * @param  $string
  * @return string
  */
-function mysql_entities_fix_string($conn, $string) {
-    return htmlentities(mysql_fix_string($conn,$string));
+function mysql_entities_fix_string($string) {
+    return htmlentities(mysql_fix_string($string));
 }
 
-function mysql_fix_string($conn, $string) {
+function mysql_fix_string($string) {
+    global $conn;
     if (get_magic_quotes_gpc()) $string = stripslashes($string);
     return $conn -> real_escape_string($string);
 }
 
 
 
+//closes files
+$conn -> close();
 
 ?>
