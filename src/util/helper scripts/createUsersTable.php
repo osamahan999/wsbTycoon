@@ -21,6 +21,7 @@ function createTable($conn) {
     $tableName = "users";
     
 
+    //newly learned, replace this with heredoc. much easier
     $query = "CREATE TABLE $tableName ( userID INT(5) UNSIGNED NOT NULL AUTO_INCREMENT KEY, username VARCHAR(16) NOT NULL, password VARCHAR(128) NOT NULL," .
     "email VARCHAR(128) NOT NULL, firstName VARCHAR(32) NOT NULL, lastName VARCHAR(32) NOT NULL, totalMoney DOUBLE(10,2) UNSIGNED NOT NULL, revenue DOUBLE(10,2) UNSIGNED NOT NULL," .
     " loss DOUBLE(10,2) UNSIGNED NOT NULL, watch_list1 CHAR(5), watch_list2 CHAR(5), watch_list3 CHAR(5), watch_list4 CHAR(5), watch_list5 CHAR(5)" .

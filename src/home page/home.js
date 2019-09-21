@@ -6,9 +6,9 @@ function getFaceData() {
 		url: 'http://localhost/wsb/src/home%20page/home.php',
 		type: 'post',
 		dataType: 'json', 
-		data: {action : 'getFaceData'},
+		data: {action : 'getTotalMoneyAndUserID'},
 		success: function(result){
-			console.log("getFaceData ajax success BAYBE!");
+			console.log("getTotalMoneyAndUserID ajax success BAYBE!");
 			totalMoney = result.totalMoney;
 			username = result.username;
 			document.getElementById("money").innerHTML = "$" + totalMoney;

@@ -14,7 +14,7 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 if (isset($_POST['input'])) {
-    searchTable($_POST['input']);
+    searchTable(mysql_entities_fix_string($conn, $_POST['input']), $conn);
 }
 
 
@@ -25,10 +25,9 @@ if (isset($_POST['input'])) {
  * @param unknown $stock
  * @param unknown $conn
  */
-function searchTable($stock)  {
+function searchTable($stock, $conn)  {
     
     
-    global $conn;
     //limit amount set in query
     $limit = 5;
     
@@ -47,5 +46,15 @@ function searchTable($stock)  {
     }
         
     echo json_encode(array("TopFiveStocks"=>$pulledStocks));
+}
+
+function mysql_entities_fix_string($conn, $string) {
+    return htmlentities(mysql_fix_string($conn, $string));
+}
+
+function mysql_fix_string($conn, $string) {
+    
+    if (get_magic_quotes_gpc()) $string = stripslashes($string);
+    return $conn -> real_escape_string($string);
 }
 ?>

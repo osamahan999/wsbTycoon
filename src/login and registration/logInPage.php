@@ -6,7 +6,6 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
 
-$logged_in = false;
 
 
 /**
@@ -17,14 +16,10 @@ $logged_in = false;
  * then sends the query and stores output in result
  * if the output is false, we output error message
  */
-if (isset($_POST['username'])       &&
-    isset($_POST['password']))       
-{
+if (isset($_POST['username']) && isset($_POST['password'])) {
     
-    
-    
-    $username       = mysql_entities_fix_string($conn, $_POST['username']);
-    $password       = mysql_entities_fix_string($conn, $_POST['password']);
+    $username = mysql_entities_fix_string($conn, $_POST['username']);
+    $password = mysql_entities_fix_string($conn, $_POST['password']);
 
     log_in($username, $password, $conn);
 }
@@ -33,10 +28,13 @@ if (isset($_POST['username'])       &&
 
 function log_in($username, $password, $conn) {
     
+    $logged_in = false;
+    
     $query          = "SELECT * FROM users WHERE username LIKE '$username'";
     $result         = $conn -> query($query);
     $result         -> data_seek(0);
     $result         = $result -> fetch_array(MYSQLI_NUM);
+    
     
     if (password_verify($password, $result[2])) {
         
@@ -46,7 +44,6 @@ function log_in($username, $password, $conn) {
         echo json_encode(array("isLogged" => $logged_in, "userID" => $_SESSION['userID']));
         
     } else {
-        $logged_in = false;
         echo json_encode(array("isLogged" => $logged_in));
     }
 }

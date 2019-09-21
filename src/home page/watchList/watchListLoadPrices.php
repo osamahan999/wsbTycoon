@@ -9,7 +9,8 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 
 
 if (isset($_GET['input'])) {
-    getWatchList($_GET['input']);
+    
+    getWatchList(mysql_entities_fix_string($conn, $_GET['input']), $conn);
 }
 
 /**
@@ -18,9 +19,8 @@ if (isset($_GET['input'])) {
  * @param unknown $conn
  * @return unknown
  */
-function getWatchList($username) {
+function getWatchList($username, $conn) {
     
-    global $conn;
         
     $query = "SELECT watch_list1, watch_list2, watch_list3, watch_list4, watch_list5, watch_list6, watch_list7" . 
     ", watch_list8, watch_list9, watch_list10, watch_list11, watch_list12, watch_list13, watch_list14, " . 
@@ -38,14 +38,24 @@ function getWatchList($username) {
 
 
 //just if i want to print the watchlist
-function printWatchList($watchList) {
-    global $conn;
+function printWatchList($watchList, $conn) {
     
     $i = 0;
     while ($watchList[$i] != null) {
         echo $watchList[$i] . '<br>';
         $i++;
     }
+}
+
+
+function mysql_entities_fix_string($conn, $string) {
+    return htmlentities(mysql_fix_string($conn, $string));
+}
+
+function mysql_fix_string($conn, $string) {
+    
+    if (get_magic_quotes_gpc()) $string = stripslashes($string);
+    return $conn -> real_escape_string($string);
 }
 
 
