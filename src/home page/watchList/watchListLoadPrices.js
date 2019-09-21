@@ -19,8 +19,6 @@ function setStocks(stocks) {
 
 //takes in username, queries sql for watch-list preferences, ajax api for prices
 function getWatchList(username) {	
-	//username of person we're loading the watchlist for
-	console.log(username);
 	
 	/**
 	 * a get-ajax request which takes in a username and returns an array of strings. 

@@ -6,6 +6,8 @@
     <script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
 	<script src="/wsb/src/home page/searchBar/searchBarQuery.js"></script> 	
 	<script src="/wsb/src/home page/watchList/watchListLoadPrices.js"></script>
+	<script src="/wsb/src/home page/home.js"></script>
+	
     <link rel="stylesheet" type="text/css" href="homeStyleSheet.css">
     
   </head>
@@ -18,7 +20,7 @@
 		</div>
 		<input type="submit" value="Go">
 	</form> 
-  	<button class="nav-btn account-btn" type="button">Account</button>
+  	<button class="nav-btn account-btn" id="account" type="button">Account</button>
   </nav>
      
   <aside class="leftPage margins"></aside>  
@@ -43,8 +45,8 @@
   
   
   	<script>	
-		autocomplete(document.getElementById("myInput"));
-		getWatchList("testUser123");
+	checkLoggedIn();
+  	autocomplete(document.getElementById("myInput"));
 	</script>
   
   

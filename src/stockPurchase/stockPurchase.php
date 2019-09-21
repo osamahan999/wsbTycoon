@@ -1,36 +1,45 @@
 <?php 
 
+/**
+ * ask about globals and about incrementing in for loops
+ * 
+ * 
+ * 
+ */
+
 require(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-$username = "Osamahan123";
+
+//hard coded transaction type for now
 $transactionType = 'buy';
 
 
 if ($_POST) {
     
-    $stock = $_POST['myStock'];
-    $amt = $_POST['amt'];
-    global $username;
+    $stock = mysql_entities_fix_string($conn, $_POST['myStock']);
+    $amt = mysql_entities_fix_string($conn, $_POST['amt']);
+    $username = mysql_entities_fix_string($conn, $_POST['username']);
     
-    purchaseStock($stock, $amt, $username);
+    purchaseStock($stock, $amt, $username, $transactionType, $conn);
 }
 
 
 
-function purchaseStock ($stock, $amt, $username) {
-    global $conn;
+function purchaseStock ($stock, $amt, $username, $transactionType, $conn) {
     
-    $userID = getUserID($username);
+    $userID = getUserID($username, $conn);
+    
     //displays DATETIME values in 'YYYY-MM-DD hh:mm:ss'
     $currentTime = currentDate();
     
     $dateTime = "2019-08-01 20:24:03";
-    $stockPrice = getStockPrice($stock, $dateTime);
+    
+    $stockPrice = getStockPrice($stock, $dateTime, $conn);
     $stockPrice *= $amt;
     
-    $userCash = getUserCash($userID);
+    $userCash = getUserCash($userID, $conn);
     
     if ($stockPrice > $userCash) {
         echo "You are far too broke for this buddy";
@@ -51,8 +60,7 @@ function purchaseStock ($stock, $amt, $username) {
 }
 
 //gets the specific user's totalMoney
-function getUserCash($userID) {
-    global $conn;
+function getUserCash($userID, $conn) {
     
     $query = "SELECT totalMoney FROM users WHERE userID = '$userID'";
     $result = $conn -> query($query);
@@ -67,8 +75,6 @@ function getUserCash($userID) {
 
 //adds the new purchase onto the transactions table;
 function updateTransactionsTable($stock, $transactionType, $amt, $date, $userID) {
-    global $conn;
-    global $transactionType;
     
     $query = "INSERT INTO transactions(stockSymbol, transactionType, amtTraded, tradeDate, userID) VALUES" .
              "('$stock', 'buy', '$amt', '$date', '$userID')";
@@ -78,8 +84,7 @@ function updateTransactionsTable($stock, $transactionType, $amt, $date, $userID)
 }
 
 //gets the user'd userid using their username. makes further searches quicker
-function getUserID($username) {
-    global $conn;
+function getUserID($username, $conn) {
     
     $query = "SELECT userID FROM users WHERE username = '$username'";
     $result = $conn -> query($query);
@@ -91,8 +96,7 @@ function getUserID($username) {
 }
 
 // gets the stock's price in our stockPrice table
-function getStockPrice ($stock, $currentTime) {
-    global $conn;
+function getStockPrice ($stock, $currentTime, $conn) {
     
     $query = "SELECT price FROM stockPrices WHERE stock = '$stock' AND timeOfPrice = '$currentTime'";
     $result = $conn -> query($query);
@@ -108,6 +112,20 @@ function currentDate() {
     $currentDateTime = date("Y:m:d H:i:s");
 
     return $currentDateTime;
+}
+
+/**
+ * fixes string to not get breached
+ * @param  $string
+ * @return string
+ */
+function mysql_entities_fix_string($conn, $string) {
+    return htmlentities(mysql_fix_string($string));
+}
+
+function mysql_fix_string($conn, $string) {
+    if (get_magic_quotes_gpc()) $string = stripslashes($string);
+    return $conn -> real_escape_string($string);
 }
 
 

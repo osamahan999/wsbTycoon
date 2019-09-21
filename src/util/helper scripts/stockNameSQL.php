@@ -12,9 +12,9 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-$csv = '../csv files/companylist.csv';
+$csv = '../csv files/companylistNYSE8122019.csv';
 
-createTable($conn);
+// createTable($conn);
 populateTable($conn, $csv);
 
 
@@ -32,7 +32,7 @@ function populateTable($conn, $csv) {
     
     if (($file = fopen($csv, "r")) != FALSE) {
         
-        ini_set('max_execution_time', 300); //temporarily sets max exe time to 300 if computer is slow at adding records to table.
+        ini_set('max_execution_time', 600); //temporarily sets max exe time to 300 if computer is slow at adding records to table.
         while(($data = fgetcsv($file, 2000, ",")) != FALSE) {
             
             $query = "INSERT INTO stocks(symbol, name, marketCap, sector, industry)" .
