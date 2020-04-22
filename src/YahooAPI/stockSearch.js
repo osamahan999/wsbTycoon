@@ -1,17 +1,9 @@
-//this is my API key
-const keyToken = "api_token=Yo0mpIdLPhffFMpfbbn5QOfCIBsq5vnH3LdlnU0rbEKHH8D5ZlHtzTpz3lWe";
-//this is the home link
-const home = "https://intraday.worldtradingdata.com/api/v1/intraday?symbol=";
-//the stocks we want data for
-var stock = "AAPL&range=1&interval=1&";	
-	
-var stockPricePerMin = [];
 
-
+var stock;
 
 //does the ajax request and also document.writes the amt of time it took
 $(document).ready(function(){
-	var Url = home.concat(stock).concat(keyToken);
+	var Url = "https://finance.yahoo.com/quote/" + $stock?p=$stock"; //main page
 		
 	$('#button').click(function(){
 		var start_time = new Date().getTime();
