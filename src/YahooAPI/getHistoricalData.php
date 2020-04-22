@@ -7,16 +7,19 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 $stock = mysql_entities_fix_string($conn, $_GET["stock"]); // user input with ajax
 
 
-getStockData($stock);
+$z = getStockData($conn, $stock);
+if ($z == false) echo "bad data";
+else echo $z;
 
 
 
-
-function getStockData($stock) {
+function getStockData($conn, $stock) {
     $yahooFile = "https://finance.yahoo.com/quote/$stock?p=$stock"; //main page
     
-    $out = strip_tags(file_get_contents($yahooFile));
+    $out = mysql_entities_fix_string($conn, strip_tags(file_get_contents($yahooFile)));
         
+    if (strpos($out, "All (0)Stocks (0)Mutual Funds (0)ETFs (0)Indices (0)Futures (0)Currencies (0)No results for") !== false) return false;
+    
     $pos = strpos($out, "trend2W10W9M");
     
     
@@ -60,7 +63,7 @@ function getStockData($stock) {
         $char = $out[$i];
     }
     
-    echo "$stock price is $currentPrice, going up $amtUp today, which is $percentUp%";
+    return "$stock price is $currentPrice, going up $amtUp today, which is $percentUp%";
 }
 
 
