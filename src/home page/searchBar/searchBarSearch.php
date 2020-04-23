@@ -32,7 +32,7 @@ function searchTable($stock, $conn)  {
     $limit = 5;
     
     // selects the symbol of the stock that has ap% in its symbol or name
-    $query = "SELECT name FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT $limit";
+    $query = "SELECT symbol FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT $limit";
     $result = $conn -> query($query);
     
     $pulledStocks = array();

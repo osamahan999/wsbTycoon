@@ -34,6 +34,7 @@ function checkLoggedIn() {
 				console.log("YOURE LOGGED IN BAYBE home.js/26");
 				getFaceData();
 			} else {
+				console.log("log in failed")
 				return window.location.href='http://localhost/wsb/src/login%20and%20registration/logInPage.html';
 
 			}

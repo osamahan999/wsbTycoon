@@ -10,13 +10,15 @@
 	
     <link rel="stylesheet" type="text/css" href="homeStyleSheet.css">
     
+    <script>checkLoggedIn();</script>
+    
   </head>
   <body style="margin: 0;">
     	
   <nav class="nav-bar">
-	<form autocomplete="off" action="/searchBarSearch.php">
+	<form autocomplete="off" action="/../wsb/src/YahooAPI/getHistoricalData.php" method="get">
 		<div class="autocomplete" style="width:300px;"> 
-			<input id="myInput" type="text" name="myStock" placeholder="Stock"><br>	
+			<input id="myInput" type="text" name="stock" placeholder="Stock"><br>		
 		</div>
 		<input type="submit" value="Go">
 	</form> 
@@ -45,7 +47,6 @@
   
   
   	<script>	
-	checkLoggedIn();
   	autocomplete(document.getElementById("myInput"));
 	</script>
   

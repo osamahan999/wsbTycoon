@@ -7,7 +7,7 @@
  */
 
 
-require(__DIR__.'/../util/access/logInfo.php');
+require_once(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
@@ -69,13 +69,13 @@ function initializeTables($username, $password, $email, $firstName, $lastName, $
 
     
     $query = <<<_query
-        "INSERT INTO users (userID, username, password, email, firstName, lastName, totalMoney, 
+        INSERT INTO users (userID, username, password, email, firstName, lastName, totalMoney, 
         revenue, loss, watch_list1, watch_list2, watch_list3, watch_list4, watch_list5, watch_list6, 
-        watch_list7, watch_list8, watch_list9, watch_list10) VALUES "('$userID', '$username', 
+        watch_list7, watch_list8, watch_list9, watch_list10) VALUES ('$userID', '$username', 
         '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue', 
         '$defaultLoss', $defaultWatchList[0], $defaultWatchList[1], $defaultWatchList[2], $defaultWatchList[3], 
         $defaultWatchList[4], $defaultWatchList[5], $defaultWatchList[6], $defaultWatchList[7], 
-        $defaultWatchList[8], $defaultWatchList[9])"
+        $defaultWatchList[8], $defaultWatchList[9])
 _query;
     $result = $conn -> query($query);
     
@@ -152,7 +152,7 @@ function hash_password($string) {
  * @return string
  */
 function mysql_entities_fix_string($conn, $string) {
-    return htmlentities(mysql_fix_string($string));
+    return htmlentities(mysql_fix_string($conn, $string));
 }
 
 function mysql_fix_string($conn, $string) {
