@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-require(__DIR__.'/../util/access/logInfo.php');
+require_once(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
@@ -18,7 +18,7 @@ if ($actionAjax == "getTotalMoneyAndUserID") {
 
 
 function logIn($conn) {
-    if (isset(mysql_entities_fix_string($conn, $_SESSION['userID']))) {
+    if ((mysql_entities_fix_string($conn, $_SESSION['userID'])) !== null) {
         
         echo json_encode(array("isLogged" => true));
     } else {

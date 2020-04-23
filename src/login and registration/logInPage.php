@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require(__DIR__.'/../util/access/logInfo.php');
+require_once(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
@@ -26,6 +26,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
 
 
+/**
+ * Checks to see if correct info; if so, sets session userID to your id so that the page can check if ur logged in. 
+ * I think this is exploitable and extremely unsafe. 
+ * @param unknown $username
+ * @param unknown $password
+ * @param unknown $conn
+ */
 function log_in($username, $password, $conn) {
     
     $logged_in = false;
@@ -48,6 +55,11 @@ function log_in($username, $password, $conn) {
     }
 }
 
+/**
+ * Todo: add salt to the hash. this is exploitable. 
+ * @param unknown $string
+ * @return unknown
+ */
 function hash_password($string) {
     return password_hash($string, PASSWORD_DEFAULT);
 }
