@@ -7,12 +7,26 @@ if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, the
 $stock = mysql_entities_fix_string($conn, $_GET["stock"]); // user input with ajax
 
 
+
 $z = getStockData($conn, $stock);
 if ($z == false) echo "bad data";
 else echo $z;
 
 
 
+/**
+ * First, generates yahoo finance page for input stock. 
+ * Next, gets the file contents, strips it of html tags or any scripting exploits. 
+ * Checks to see if yahoo does not have that stock; if not, returns false. 
+ * Gets position of a globally found string in all yahoo finance stock pages
+ * gets stock price & daily change & percentage in an estimated string
+ * strips string into three separate sections and stores them
+ * returns string with all info
+ * 
+ * @param unknown $conn
+ * @param unknown $stock
+ * @return boolean|string
+ */
 function getStockData($conn, $stock) {
     $yahooFile = "https://finance.yahoo.com/quote/$stock?p=$stock"; //main page
     
