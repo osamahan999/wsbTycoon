@@ -5,7 +5,6 @@ $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn 
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
 if (isset($_POST["stock"])) {
-    echo "post worked";
     $stock = mysql_entities_fix_string($conn, $_POST["stock"]); // user input with ajax
     
     getStockData($conn, $stock);
@@ -53,6 +52,9 @@ function getStockData($conn, $stock) {
         $char = $out[$i];
     }
     
+    $posOrNeg = $char;
+    $stockData[3] = $posOrNeg;
+    
     $stockData[0] = $currentPrice;
     
     
@@ -82,7 +84,7 @@ function getStockData($conn, $stock) {
     
     $stockData[2] = $percentUp;
     
-    echo json_encode(array("price" => $stockData[0], "amtUp" => $stockData[1], "percentUp" => $stockData[2]));
+    echo json_encode(array("price" => $stockData[0], "amt" => $stockData[1], "percent" => $stockData[2], "posOrNeg" => $stockData[3]));
 }
 
 
