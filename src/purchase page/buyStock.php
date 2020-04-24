@@ -15,6 +15,7 @@ if (isset($_POST[stock]) && isset($_POST[amt]) && isset($_POST[price]) && isset(
     $username = mysql_entities_fix_string($conn, $_POST[username]);
     $purchaseType = mysql_entities_fix_string($conn, $_POST[purchaseType]);
     
+    
     if (strcmp($purchaseType, 'buy') == 0) purchase($conn, $stock, $amt, $price, $username); //if buy, call purchase
     
     

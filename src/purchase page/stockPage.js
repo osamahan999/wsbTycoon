@@ -1,42 +1,44 @@
 
 
 $(function() { //shorthand document.ready function
-	    $('#purchase').one('submit', function(e) { //use on if jQuery 1.7+
-	        e.preventDefault();  //prevent form from submitting
+	$('#purchase').one('submit', function(e) { //use on if jQuery 1.7+
+		e.preventDefault();  //prevent form from submitting
 
-	        
-	        const stock = getStock();
-	    	const amt = document.getElementById("amt").value; 
-	    	var price = parseFloat($("#stockPrice").text());
-	    	
-	    	const total = price * amt; //price of transaction
-	    	
-	    	var totalCash = $("#money").text();
-	    	totalCash = parseFloat(totalCash.substring(1, totalCash.length));
-	    	
-	    	const username = $("#account").text();
-	    	
-	    	
-	    	if (total >= totalCash) console.log("can buy");
-	    	
-	        document.getElementById("purchase").innerHTML = "<p>Done Buying!</p>";
 
-	    	
-	    	$.ajax({
-	    		url: 'http://localhost/wsb/src/purchase page/buyStock.php',
-	    		type: 'post',
-	    		dataType: 'json', 
-	    		data: {stock: stock, amt: amt, price: price, username: username, purchaseType: 'buy'},
-	    		success: function(result){
-	    			console.log("buy stock called");
-	    			
-	    			
-	    			
-	    		}
-	    	});	
-	    	
-	    });
+		const stock = getStock();
+		const amt = document.getElementById("amt").value; 
+		var price = parseFloat($("#stockPrice").text().replace(",",""));
+
+		const total = price * amt; //price of transaction
+
+		var totalCash = ($("#money").text())
+		totalCash = parseFloat(totalCash.substring(1, totalCash.length));
+
+		const username = $("#account").text();
+
+		if (totalCash >= total) {
+			document.getElementById("purchase").innerHTML = "<p>Done Buying!</p>";
+
+
+			$.ajax({
+				url: 'http://localhost/wsb/src/purchase page/buyStock.php',
+				type: 'post',
+				dataType: 'json', 
+				data: {stock: stock, amt: amt, price: price, username: username, purchaseType: 'buy'},
+				success: function(result){
+					console.log("buy stock called");
+
+					getFaceData();
+
+				}
+			})
+		}
+		else {
+			alert("You're broke");
+		}
+
 	});
+});
 
 /**
  * Returns the stock in the URL
@@ -50,9 +52,9 @@ function getStock() {
 
 function getStockData() {
 	console.log("getStockData called");
-	
+
 	const theStock = getStock();
-	
+
 	$.ajax({
 		url: 'http://localhost/wsb/src/YahooAPI/getCurrentData.php',
 		type: 'post',
@@ -60,12 +62,12 @@ function getStockData() {
 		data: {stock : theStock},
 		success: function(result){
 			console.log("it worked");
-			
+
 			document.getElementById("stockPrice").innerHTML = result.price;
 			document.getElementById("amtChanged").innerHTML = result.posOrNeg + result.amt;
 			document.getElementById("percent").innerHTML = result.posOrNeg + result.percent;
 
-			
+
 		}
 	});	
 }
@@ -74,7 +76,7 @@ function getStockData() {
 
 function getFaceData() {
 	console.log("getFaceData called");
-	
+
 	$.ajax({
 		url: 'http://localhost/wsb/src/home%20page/home.php',
 		type: 'post',
@@ -93,7 +95,7 @@ function getFaceData() {
 
 function checkLoggedIn() {
 	console.log("check logged called");
-	
+
 	$.ajax({
 		url: 'http://localhost/wsb/src/home%20page/home.php',
 		type: 'post',
@@ -102,7 +104,7 @@ function checkLoggedIn() {
 		success: function(result){
 			loggedIn = result.isLogged;
 			console.log(loggedIn);
-		
+
 			if (loggedIn) {
 				console.log("YOURE LOGGED IN BAYBE home.js/26");
 				getFaceData();
