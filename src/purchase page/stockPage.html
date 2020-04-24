@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WSB Tycoon</title>
+    <script src="/../wsb/src/util/externalLibraries/jquery.min.js"></script>
+	  <script src="/wsb/src/home page/searchBar/searchBarQuery.js"></script> 	
+	  <script src="/wsb/src/purchase page/stockPage.js"></script>
+	
+    <link rel="stylesheet" type="text/css" href="stockPage.css">
+    
+    <script>checkLoggedIn(); getStockData();</script>
+    
+  </head>
+  <body style="margin: 0;">
+    	
+  <nav class="nav-bar">
+	<form autocomplete="off" action="/../wsb/src/purchase page/stockPage.html" method="get">
+		<div class="autocomplete" style="width:300px;"> 
+			<input id="myInput" type="text" name="stock" placeholder="Stock"><br>		
+		</div>
+		<input type="submit" value="Go">
+	</form>
+    <p class ="nav-btn account-btn" id="cash" >Your cash is:</p>
+    <button class ="nav-btn account-btn" id="money" type="button">$</button>
+    <button class ="nav-btn account-btn" id="account" type="button">Account</button>
+  </nav>
+		
+Stock price is<p id="stockPrice"></p><br>
+Stock changed by <p id="amtChanged"></p><br>
+Stock percent changed by <p id="percent"></p><br><br>
+	
+	<form id="purchase">
+		<input type="number" min="1" max="100" id="amt">
+  		<input type="submit" value="Submit">
+	</form>
+	
+
+  <aside class="leftPage margins"></aside>  
+  <div class="middlePage">
+  
+  </div>
+  <aside class="rightPage margins"></aside>
+  
+  
+  	<script>	
+  	autocomplete(document.getElementById("myInput"));
+	</script>
+  
+

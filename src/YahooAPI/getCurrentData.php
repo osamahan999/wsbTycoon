@@ -4,14 +4,12 @@ require_once(__DIR__.'/../util/access/logInfo.php');
 $conn = new mysqli($hn, $un, $pw, $db); //creates new mysqli object called conn with all the login info
 if ($conn->connect_error) die($conn->connect_error); //if the data is wrong, then terminate and call the error
 
-$stock = mysql_entities_fix_string($conn, $_GET["stock"]); // user input with ajax
-
-
-
-$z = getStockData($conn, $stock);
-if ($z == false) echo "bad data";
-else echo $z;
-
+if (isset($_POST["stock"])) {
+    $stock = mysql_entities_fix_string($conn, $_POST["stock"]); // user input with ajax
+    
+    getStockData($conn, $stock);
+    
+}
 
 
 /**
@@ -32,13 +30,14 @@ function getStockData($conn, $stock) {
     
     $out = mysql_entities_fix_string($conn, strip_tags(file_get_contents($yahooFile)));
         
+
+    
     if (strpos($out, "All (0)Stocks (0)Mutual Funds (0)ETFs (0)Indices (0)Futures (0)Currencies (0)No results for") !== false) return false;
     
     $pos = strpos($out, "trend2W10W9M");
-    
-    
     $out = substr($out, $pos + 12, 26);
     
+    $stockData = Array();
     
     /**
      * sample string 1,258.41+46.25 (+3.82%)At
@@ -47,16 +46,20 @@ function getStockData($conn, $stock) {
     
     $i = 1;
     $char = $out[$i];
-    $currentPrice = $out[0] + "";
-    while (strcmp($char, "+") != 0) {
+    $currentPrice = $out[0];
+    while (strcmp($char, "+") != 0 && strcmp($char, "-") != 0) {
         $currentPrice = $currentPrice . $char;
         $i++;
         $char = $out[$i];
     }
     
+    $posOrNeg = $char;
+    $stockData[3] = $posOrNeg;
+    
+    $stockData[0] = $currentPrice;
+    
     
     $i = strlen($currentPrice) + 2; //adds the + and the first two char
-    
     $char = $out[$i]; //second char
     $amtUp = $out[$i - 1];
     
@@ -65,6 +68,9 @@ function getStockData($conn, $stock) {
         $i++;
         $char = $out[$i];
     }
+    
+    $stockData[1] = $amtUp;
+    
     
     $i = strlen($currentPrice) + strlen($amtUp) + 5; //starts after (+ and first num
     $char = $out[$i];
@@ -77,7 +83,9 @@ function getStockData($conn, $stock) {
         $char = $out[$i];
     }
     
-    return "$stock price is $currentPrice, going up $amtUp today, which is $percentUp%";
+    $stockData[2] = $percentUp;
+    
+    echo json_encode(array("price" => $stockData[0], "amt" => $stockData[1], "percent" => $stockData[2], "posOrNeg" => $stockData[3]));
 }
 
 

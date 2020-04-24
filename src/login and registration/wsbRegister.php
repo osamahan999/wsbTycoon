@@ -45,7 +45,7 @@ if  (isset($_POST['username'])                                                  
     $lastName       = mysql_entities_fix_string($conn, $_POST['lname']);
     
     
-    initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn);
+    initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn, $defaultTotalMoney, $defaultRevenue, $defaultLoss);
     
 }
 
@@ -59,7 +59,7 @@ if  (isset($_POST['username'])                                                  
  * @param unknown $defaultWatchList
  * @param unknown $conn
  */
-function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn) {
+function initializeTables($username, $password, $email, $firstName, $lastName, $defaultWatchList, $conn, $defaultTotalMoney, $defaultRevenue, $defaultLoss) {
 //     $query          = "INSERT INTO users VALUES" .
 //                       "('$userID', '$username', '$password', '$email', '$firstName', '$lastName', '$defaultTotalMoney', '$defaultRevenue'," . 
 //  "'$defaultLoss', '$defaultWatchList[0]', '$defaultWatchList[1]', '$defaultWatchList[2]', '$defaultWatchList[3]', '$defaultWatchList[4]', '$defaultWatchList[5]'," . 
@@ -79,7 +79,7 @@ function initializeTables($username, $password, $email, $firstName, $lastName, $
 _query;
     $result = $conn -> query($query);
     
-    if (!$result)   echo "INSERT failed: $query <br>" . $conn->error . "<br><br>";
+    if (!$result)   echo "INSERT failed:<br><br><br>";
     
 }
 
