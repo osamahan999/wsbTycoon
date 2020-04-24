@@ -4,17 +4,34 @@ $(function() { //shorthand document.ready function
 	    $('#purchase').on('submit', function(e) { //use on if jQuery 1.7+
 	        e.preventDefault();  //prevent form from submitting
 	        
-	        //form data
+
+	        const stock = getStock();
 	    	const amt = document.getElementById("amt").value; 
-	    	var price = $("#stockPrice").text();
-	    	price = parseFloat(price);
+	    	var price = parseFloat($("#stockPrice").text());
+	    	
 	    	const total = price * amt; //price of transaction
 	    	
 	    	var totalCash = $("#money").text();
 	    	totalCash = parseFloat(totalCash.substring(1, totalCash.length));
 	    	
+	    	const username = $("#account").text();
+	    	
 	    	
 	    	if (total >= totalCash) console.log("can buy");
+	    	
+	    	
+	    	$.ajax({
+	    		url: 'http://localhost/wsb/src/purchase page/buyStock.php',
+	    		type: 'post',
+	    		dataType: 'json', 
+	    		data: {stock: stock, amt: amt, price: price, username: username, purchaseType: 'buy'},
+	    		success: function(result){
+	    			console.log("buy stock called");
+	    			
+	    			
+	    			
+	    		}
+	    	});	
 	    	
 	    });
 	});

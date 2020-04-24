@@ -31,6 +31,7 @@ function getStockData($conn, $stock) {
     $out = mysql_entities_fix_string($conn, strip_tags(file_get_contents($yahooFile)));
         
 
+    
     if (strpos($out, "All (0)Stocks (0)Mutual Funds (0)ETFs (0)Indices (0)Futures (0)Currencies (0)No results for") !== false) return false;
     
     $pos = strpos($out, "trend2W10W9M");
@@ -45,7 +46,7 @@ function getStockData($conn, $stock) {
     
     $i = 1;
     $char = $out[$i];
-    $currentPrice = $out[0] + "";
+    $currentPrice = $out[0];
     while (strcmp($char, "+") != 0 && strcmp($char, "-") != 0) {
         $currentPrice = $currentPrice . $char;
         $i++;
