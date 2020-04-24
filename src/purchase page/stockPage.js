@@ -1,5 +1,23 @@
 
-console.log(getStock());
+
+$(function() { //shorthand document.ready function
+	    $('#purchase').on('submit', function(e) { //use on if jQuery 1.7+
+	        e.preventDefault();  //prevent form from submitting
+	        
+	        //form data
+	    	const amt = document.getElementById("amt").value; 
+	    	var price = $("#stockPrice").text();
+	    	price = parseFloat(price);
+	    	const total = price * amt; //price of transaction
+	    	
+	    	var totalCash = $("#money").text();
+	    	totalCash = parseFloat(totalCash.substring(1, totalCash.length));
+	    	
+	    	
+	    	if (total >= totalCash) console.log("can buy");
+	    	
+	    });
+	});
 
 /**
  * Returns the stock in the URL
@@ -24,9 +42,9 @@ function getStockData() {
 		success: function(result){
 			console.log("it worked");
 			
-			document.getElementById("stockPrice").innerHTML = "$" + result.price;
+			document.getElementById("stockPrice").innerHTML = result.price;
 			document.getElementById("amtChanged").innerHTML = result.posOrNeg + result.amt;
-			document.getElementById("percent").innerHTML = result.posOrNeg + result.percent + "%";
+			document.getElementById("percent").innerHTML = result.posOrNeg + result.percent;
 
 			
 		}
