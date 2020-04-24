@@ -1,10 +1,10 @@
 
 
 $(function() { //shorthand document.ready function
-	    $('#purchase').on('submit', function(e) { //use on if jQuery 1.7+
+	    $('#purchase').one('submit', function(e) { //use on if jQuery 1.7+
 	        e.preventDefault();  //prevent form from submitting
-	        
 
+	        
 	        const stock = getStock();
 	    	const amt = document.getElementById("amt").value; 
 	    	var price = parseFloat($("#stockPrice").text());
@@ -19,6 +19,8 @@ $(function() { //shorthand document.ready function
 	    	
 	    	if (total >= totalCash) console.log("can buy");
 	    	
+	        document.getElementById("purchase").innerHTML = "<p>Done Buying!</p>";
+
 	    	
 	    	$.ajax({
 	    		url: 'http://localhost/wsb/src/purchase page/buyStock.php',
