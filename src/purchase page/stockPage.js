@@ -1,5 +1,45 @@
 
 
+/**
+ * gets your owned shares of this stock  
+ * @returns
+ */
+function getOwnedStocks() {
+	const username = $("#account").text();
+	const stock = getStock();
+
+
+	$.ajax({
+		url: 'http://localhost/wsb/src/purchase page/buyStock.php',
+		type: 'post',
+		dataType: 'json', 
+		data: {username: username, stock: stock, action: "getOwned"},
+		success: function(result){
+			console.log("get stocks called");
+			result = result.result; //I know. don't laugh.
+			
+			
+			/**
+			 * Prints the purchase to the page
+			 */
+			for(var x = 0; x < result.length; x++){ 
+				
+				const stock = result[x][1];
+				const amt = result[x][4];
+				const priceAtPurchase = result[x][3];
+				const str = "<div><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + "<\/p><\/div><br>" ;
+				
+				$('#ownedStocks').append(str);  
+			} 
+
+
+
+
+		}
+	})
+}
+
+
 $(function() { //shorthand document.ready function
 	$('#purchase').one('submit', function(e) { //use on if jQuery 1.7+
 		e.preventDefault();  //prevent form from submitting
@@ -88,6 +128,8 @@ function getFaceData() {
 			username = result.username;
 			document.getElementById("money").innerHTML = "$" + totalMoney;
 			document.getElementById("account").innerHTML = username;
+			getOwnedStocks();
+
 		}
 	});	
 }
