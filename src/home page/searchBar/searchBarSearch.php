@@ -32,20 +32,22 @@ function searchTable($stock, $conn)  {
     $limit = 5;
     
     // selects the symbol of the stock that has ap% in its symbol or name
-    $query = "SELECT symbol FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT $limit";
+    $query = "SELECT symbol,name FROM stocks WHERE (symbol LIKE '$stock%') OR (name LIKE '$stock%') ORDER BY symbol LIMIT $limit";
     $result = $conn -> query($query);
     
-    $pulledStocks = array();
+    $pulledStocksSymbol = array();
+    $pulledStocksName = array();
     
     for ($i = 0; $i < $limit; $i++) {
         $row    = $result   -> data_seek[i];
         $newResult = $result   -> fetch_array(MYSQLI_NUM);
         
-        array_push($pulledStocks, $newResult[0]);
+        array_push($pulledStocksSymbol, $newResult[0]);
+        array_push($pulledStocksName, $newResult[1]);
         
     }
         
-    echo json_encode(array("TopFiveStocks"=>$pulledStocks));
+    echo json_encode(array("TopFiveStocks"=>$pulledStocksSymbol, "TopFiveStocksNames"=>$pulledStocksName));
 }
 
 function mysql_entities_fix_string($conn, $string) {
