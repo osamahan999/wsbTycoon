@@ -18,6 +18,8 @@ function getOwnedStocks() {
 			console.log("get stocks called");
 			result = result.result; //I know. don't laugh.
 			
+			$('#ownedStocks').empty();
+
 			
 			/**
 			 * Prints the purchase to the page
