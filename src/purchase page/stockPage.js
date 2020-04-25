@@ -29,7 +29,8 @@ function getOwnedStocks() {
 				const stock = result[x][1];
 				const amt = result[x][4];
 				const priceAtPurchase = result[x][3];
-				const str = "<div><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + "<\/p><\/div><br>" ;
+				const time = result[x][5];
+				const str = "<div><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + " at time:" + time + "<\/p><\/div><br>" ;
 				
 				$('#ownedStocks').append(str);  
 			} 
