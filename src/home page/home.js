@@ -1,4 +1,43 @@
 
+
+function getOwnedStocks() {
+	const username = $("#account").text();
+
+
+	$.ajax({
+		url: 'http://localhost/wsb/src/home page/home.php',
+		type: 'post',
+		dataType: 'json', 
+		data: {username: username, action: "getOwned"},
+		success: function(result){
+			console.log("get stocks called");
+			result = result.result; //I know. don't laugh.
+			
+			$('#ownedStocks').empty();
+
+			
+			/**
+			 * Prints the purchase to the page
+			 */
+			for(var x = 0; x < result.length; x++){ 
+				
+				const stock = result[x][1];
+				const amt = result[x][4];
+				const priceAtPurchase = result[x][3];
+				const time = result[x][5];
+				const str = "<div><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + " at time:" + time + "<\/p><\/div><br>" ;
+				
+				$('#ownedStocks').append(str);  
+			} 
+
+
+
+
+		}
+	})
+}
+
+
 function getFaceData() {
 	console.log("getFaceData called");
 	
@@ -13,6 +52,7 @@ function getFaceData() {
 			username = result.username;
 			document.getElementById("money").innerHTML = "$" + totalMoney;
 			document.getElementById("account").innerHTML = username;
+			getOwnedStocks();
 		}
 	});	
 }

@@ -66,7 +66,6 @@ function autocomplete(inp) {
   function addToList(a, b, i, arr) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
-    	  console.log("pointer hit for loop on line 46!");
     	  if (arr[i] !== null) {
     		  //create a DIV element for each element
     		  b = document.createElement("DIV");

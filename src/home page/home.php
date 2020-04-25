@@ -16,6 +16,39 @@ if ($actionAjax == "getTotalMoneyAndUserID") {
 }
 
 
+//if not set, break;
+//get owned shares of this stock
+if (isset($_POST[action]) && strcmp(mysql_entities_fix_string($conn, $_POST[action]), "getOwned") == 0) {
+    
+    $username = mysql_entities_fix_string($conn, $_POST[username]);
+    
+    getOwned($conn, $username, $stock);
+}
+
+
+function getOwned($conn, $username) {
+    
+    $query = "SELECT * FROM transactions WHERE userID = (SELECT userID FROM users WHERE username='$username')";
+    $result         = $conn -> query($query);
+    
+    $ownedStocks = array();
+    $length = $result -> num_rows;
+    
+    
+    for ($i = 0; $i < $length; $i++) {
+        $row    = $result   -> data_seek[i];
+        $newResult = $result   -> fetch_array(MYSQLI_NUM);
+        
+        array_push($ownedStocks, $newResult);
+        
+    }
+    
+    echo json_encode(array(result => $ownedStocks));
+    
+    
+}
+
+
 
 function logIn($conn) {
     if ((mysql_entities_fix_string($conn, $_SESSION['userID'])) !== null) {
