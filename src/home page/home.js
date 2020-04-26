@@ -26,8 +26,13 @@ function getOwnedStocks() {
 				const priceAtPurchase = result[x][3];
 				const time = result[x][5];
 				const str = "<div><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + " at time:" + time + "<\/p><\/div><br>" ;
-				
+
+				$('#ownedStocks').append("<form id='sell'" + result[x][0] + " action='' method='get>");
 				$('#ownedStocks').append(str);  
+				
+				$('#ownedStocks').append("<input type='number' min='1' max='" + amt + "'>");
+				$('#ownedStocks').append("<input type='submit' value='Sell'>");
+				$('#ownedStocks').append("</form>");
 			} 
 
 
