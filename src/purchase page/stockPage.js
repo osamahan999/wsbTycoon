@@ -1,9 +1,14 @@
 
 
+
 /**
  * gets your owned shares of this stock  
  * @returns
  */
+
+var sellForms = [];
+
+
 function getOwnedStocks() {
 	const username = $("#account").text();
 	const stock = getStock();
@@ -17,27 +22,34 @@ function getOwnedStocks() {
 		success: function(result){
 			console.log("get stocks called");
 			result = result.result; //I know. don't laugh.
-			
+
 			$('#ownedStocks').empty();
 
-			
+
 			/**
 			 * Prints the purchase to the page
 			 */
 			for(var x = 0; x < result.length; x++){ 
-				
+
 				const stock = result[x][1];
 				const amt = result[x][4];
 				const priceAtPurchase = result[x][3];
 				const time = result[x][5];
-				const str = "<div id='" + result[x][0] + "'><p>stock:" + stock + " amt:" + amt + " price at purchase:" + priceAtPurchase + " at time:" + time + "<\/p><\/div><br>" ;
-				
-				
-				$('#ownedStocks').append("<form id='sell'" + result[x][0] + " action='' method='get>");
-				$('#ownedStocks').append(str);  
-				
-				$('#ownedStocks').append("<input type='number' min='1' max='" + amt + "'>");
-				$('#ownedStocks').append("<input type='submit' value='Sell'>");
+				const formID = "sell" + result[x][0];
+
+				sellForms[x] = formID;
+
+
+
+				const str = "<div id='" + result[x][0] + "'><p>stock:" + stock + " amt:" + amt + " price at purchase:" + 
+				priceAtPurchase + " at time:" + time + "<\/p><\/div><br>" ;
+
+				$('#ownedStocks').append("<form id = '" + formID + "' action='sellStock('" + formID + "') method='get' >");
+
+				$('#' + formID).append(str);  
+				$('#' + formID).append("<input type='number' min='1' max='" + amt + "'>");
+				$('#' + formID).append("<input type='submit' value='Sell'>");
+
 				$('#ownedStocks').append("</form>");
 			} 
 		}
@@ -84,6 +96,22 @@ $(function() { //shorthand document.ready function
 
 	});
 });
+
+
+//sell stock based on formID
+function sellStock(formID) {
+	$(function() {
+		$('#' + formID).one('submit', function(e) {
+
+			e.preventDefault();  //prevent form from submitting
+
+
+
+
+		});
+	})
+
+}
 
 /**
  * Returns the stock in the URL
