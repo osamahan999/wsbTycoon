@@ -1,3 +1,19 @@
+A stock trading platform that is currently in progress of being built. It uses data scraped from Yahoo Finance, and stores all the user data on a MySQL server. 
+
+All user data is hashed and stored securily, and no user information is stored in cookies or other vulnerable data.
+
+I use HTML5, CSS3, JavaScript, and JQuery for the frontend. I built the pages using basic HTML and JS, as I am not a very good frontend developer. I used JQuery to communicate with the backend using AJAX, where I am using PHP and MySQL. The PHP is used to communicate with the SQL server and to run most of the logic. 
+
+The search bar utilizes a list of stocks in my database and clever engineering to autocomplete, built fully in this project without an external library. 
+
+This project was inspired by reddit.com/r/wallstreetbets where people gamble far too much money on far too risky 'investments'. I decided that I wanted to be a part
+of these high rollers, but I did not want the risk. And so, I decided to begin working on this simulator.
+
+I learned a lot working on this project. In the process I taught myself HTML5, CSS3, JavaScript, JQuery, PHP, and MySQL. I also taught myself a lot about REST APis and how to build an efficient database, and store data efficiently. 
+
+I am currently not working on this project simply due to changed interests, but will most likely pick it back up some other time. 
+
+
 src
 	home page
 		home.html - html mark up for home page
